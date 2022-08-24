@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 
 AntDConfigProvider.config({
   theme: {
-    primaryColor: "#ffc93c",
+    primaryColor: "#7F8487",
   },
 });
 

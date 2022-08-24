@@ -1,0 +1,85 @@
+.nav {
+    > div {
+        display: flex;
+        align-items: center;
+    }
+
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+
+    display: flex;
+    justify-content: space-between;
+
+    position: fixed;
+    top: 0;
+    z-index: 1;
+
+    box-shadow: 0 4px 12px #00000014, 0 0 1px #0100001a;
+}
+
+.navBrand {
+    width: 35px;
+
+    img {
+        width: 100%;
+        object-fit: cover;
+
+        cursor: pointer;
+    }
+}
+
+.navMiddle {
+    width: 80%;
+    padding: 0 1rem;
+
+    .searchBar {
+        &, * {
+            background-color: #eee;
+        }
+
+        ::placeholder {            
+            color: #767676;
+            font-size: 14px;
+        }
+
+        max-width: 800px;
+        height: 35px;
+        
+        border: none;
+        border-radius: 15px;
+    }
+}
+
+.navRight {
+    color: #767676;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.6;
+    
+    p {
+        margin: auto;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .navSetting, .hamburger {
+        cursor: pointer;
+    }
+
+    .navSetting:hover, .hamburger:hover {
+        transform: scale(1.02);
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .navSetting {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex !important;
+    }
+}
