@@ -1,11 +1,12 @@
 import React from "react"
 import s from "./s.module.scss";
 
-import { Input } from "antd";
-import { SearchOutlined, MenuOutlined } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
+import SearchBar from "./Searchbar/Searchbar";
 
 const unsplashIcon =
   "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/unsplash-512.png";
+
 
 const Nav = (): JSX.Element => {
     return (
@@ -15,12 +16,7 @@ const Nav = (): JSX.Element => {
         </div>
 
         <div className={s.navMiddle}>
-          <Input
-            className={s.searchBar}
-            size="large"
-            placeholder="Search free high-resolution photos"
-            prefix={<SearchOutlined />}
-          />
+          <SearchBar/>
         </div>
 
         <div className={s.navRight}>
