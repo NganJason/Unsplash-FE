@@ -1,0 +1,16 @@
+.searchBar {
+    &, * {
+        background-color: #eee;
+    }
+
+    ::placeholder {            
+        color: #767676;
+        font-size: 14px;
+    }
+
+    max-width: 800px;
+    height: 35px;
+    
+    border: none;
+    border-radius: 15px;
+}
