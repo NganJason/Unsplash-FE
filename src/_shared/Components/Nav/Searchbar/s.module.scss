@@ -1,8 +1,4 @@
-.searchBar {
-    &, * {
-        background-color: #eee;
-    }
-
+span.searchBar {
     ::placeholder {            
         color: #767676;
         font-size: 14px;
@@ -12,5 +8,4 @@
     height: 35px;
     
     border: none;
-    border-radius: 15px;
 }
