@@ -16,7 +16,7 @@ const Nav = (): JSX.Element => {
         </div>
 
         <div className={s.navMiddle}>
-          <SearchBar/>
+          <SearchBar className={s.navSearch}/>
         </div>
 
         <div className={s.navRight}>

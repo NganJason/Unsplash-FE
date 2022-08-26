@@ -47,15 +47,19 @@ import { SearchOutlined } from "@ant-design/icons";
     />
   );
 
-const SearchBar = (): JSX.Element => {
+type SearchBarProps = {
+  className?: string;
+}
+
+const SearchBar = (props: SearchBarProps): JSX.Element => {
     return (
       <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
-        <Input
-          className={s.searchBar}
-          size="large"
-          placeholder="Search free high-resolution photos"
-          prefix={<SearchOutlined />}
-        />
+          <Input
+            className={`${s.searchBar} ${props.className}`}
+            size="large"
+            placeholder="Search free high-resolution photos"
+            prefix={<SearchOutlined/>}
+          />
       </Dropdown>
     );
 }
