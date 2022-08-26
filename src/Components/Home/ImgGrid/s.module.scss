@@ -1,0 +1,20 @@
+.columnGrid {
+    max-width: 1320px;
+    margin: auto;
+
+    display: grid;
+    align-items: start;
+    
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-column-gap: 24px;
+}
+
+.rowGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 24px;
+
+    img {
+        width: 100%;
+    }
+}
