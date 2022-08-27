@@ -66,7 +66,15 @@ const ImgGrid = (): JSX.Element => {
               <div className={s.rowGrid}>
                 {
                   colImgs.map((imgUrl) => {
-                    return <img src={imgUrl} />;
+                    return (
+                      <div className={s.imgGrid}>
+                        <img src={imgUrl} />
+                        <div className={s.imgShadow}></div>
+
+                        <div className={s.imgInfo}>
+                        </div>
+                      </div>
+                    );
                   })
                 }
               </div>
