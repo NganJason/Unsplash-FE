@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import s from "./s.module.scss";
+
+import { useWindowDimensions } from "../../../_shared/hooks/useWindowDimensions";
 
 const images = [
   "https://images.unsplash.com/photo-1657299142997-cb45f5dfa9ed?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
@@ -21,38 +23,56 @@ const images = [
   "https://images.unsplash.com/photo-1661443066898-45c0b2a1c396?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyOXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
 ];
 
-const getColumnImgs = (column: number): string[] => {
-    let imgs: string[] = []
+const getImgs = (
+  images: string[], 
+  cols: number
+): Array<string[]> => {
+  if (cols === 0) {
+    return []
+  }
 
-    for (let idx = 0; idx < images.length; idx++) {
-        if (idx % 3 === column) {
-            imgs.push(images[idx])
-        }
-    }
+  let imgs = new Array(cols).fill(0).map(() => new Array(0))
 
-    return imgs
+  for (let i = 0; i < images.length; i++) {
+    let idx = i % cols
+    imgs[idx].push(images[i])
+  }
+
+  return imgs
 }
 
 const ImgGrid = (): JSX.Element => {
+    const [columns, setColumns] = useState(3)
+    const { width } = useWindowDimensions()
+
+    useEffect(() => {
+      if (width <= 600) {
+        setColumns(1)
+      } else if (width <= 900) {
+        setColumns(2)
+      } else {
+        setColumns(3)
+      }
+    }, [width])
+
     return (
-      <div className={s.columnGrid}>
-        <div className={s.rowGrid}>
-          {getColumnImgs(0).map((imgUrl) => {
-            return <img src={imgUrl} />;
-          })}
-        </div>
-
-        <div className={s.rowGrid}>
-          {getColumnImgs(1).map((imgUrl) => {
-            return <img src={imgUrl} />;
-          })}
-        </div>
-
-        <div className={s.rowGrid}>
-          {getColumnImgs(2).map((imgUrl) => {
-            return <img src={imgUrl} />;
-          })}
-        </div>
+      <div
+        className={s.columnGrid}
+        style={{ "--cols": columns } as React.CSSProperties}
+      >
+        {
+          getImgs(images, columns).map((colImgs) => {
+            return (
+              <div className={s.rowGrid}>
+                {
+                  colImgs.map((imgUrl) => {
+                    return <img src={imgUrl} />;
+                  })
+                }
+              </div>
+            );    
+          })
+        }
       </div>
     );
 }
