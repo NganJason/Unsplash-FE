@@ -49,6 +49,7 @@ const ImgGrid = (): JSX.Element => {
     const [columns, setColumns] = useState(3)
     const { width } = useWindowDimensions()
     const [modalVisible, setModalVisible] = useState(false)
+    const [imgUrl, setImgUrl] = useState("")
 
     useEffect(() => {
       if (width <= 600) {
@@ -70,7 +71,13 @@ const ImgGrid = (): JSX.Element => {
             return (
               <div className={s.rowGrid}>
                 {colImgs.map((imgUrl) => {
-                  return <ImgCard imgUrl={imgUrl} onClick={()=>{setModalVisible(true);}}/>;
+                  return <ImgCard 
+                            imgUrl={imgUrl} 
+                            onClick={()=>{
+                              setModalVisible(true);
+                              setImgUrl(imgUrl);
+                            }}
+                          />;
                 })}
               </div>
             );
@@ -88,7 +95,7 @@ const ImgGrid = (): JSX.Element => {
             setModalVisible(false)
           }}
         >
-          <ImgModal />
+          <ImgModal imgUrl={imgUrl}/>
         </Modal>
       </div>
     );
