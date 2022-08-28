@@ -3,6 +3,9 @@ import s from "./s.module.scss";
 
 import { useWindowDimensions } from "../../../_shared/hooks/useWindowDimensions";
 
+import ImgCard from "./ImgCard/ImgCard";
+
+
 const images = [
   "https://images.unsplash.com/photo-1657299142997-cb45f5dfa9ed?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
   "https://images.unsplash.com/photo-1661308148762-3d89354e9e77?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60",
@@ -67,13 +70,7 @@ const ImgGrid = (): JSX.Element => {
                 {
                   colImgs.map((imgUrl) => {
                     return (
-                      <div className={s.imgGrid}>
-                        <img src={imgUrl} />
-                        <div className={s.imgShadow}></div>
-
-                        <div className={s.imgInfo}>
-                        </div>
-                      </div>
+                      <ImgCard imgUrl={imgUrl}/>
                     );
                   })
                 }

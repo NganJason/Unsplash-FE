@@ -1,0 +1,117 @@
+.imgGrid {
+    width: 100%;
+    height: auto;
+
+    position: relative;
+    cursor: zoom-in;
+
+    img {
+        width: 100%;
+    }
+
+    .imgShadow, .imgInfo {
+        height: 100%;
+        width: 100%;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        opacity: 0;
+        transition: opacity 0.1s ease-in-out;
+    }
+}
+
+.imgGrid:hover {
+    & .imgShadow {
+        background-image: linear-gradient(180deg,#00000057 0,rgba(0,0,0,.338) 3.5%,rgba(0,0,0,.324) 7%,rgba(0,0,0,.306) 10.35%,rgba(0,0,0,.285) 13.85%,rgba(0,0,0,.262) 17.35%,rgba(0,0,0,.237) 20.85%,rgba(0,0,0,.213) 24.35%,rgba(0,0,0,.188) 27.85%,rgba(0,0,0,.165) 31.35%,rgba(0,0,0,.144) 34.85%,rgba(0,0,0,.126) 38.35%,rgba(0,0,0,.112) 41.85%,rgba(0,0,0,.103) 45.35%,#0000001a 48.85%,rgba(0,0,0,.103) 52.35%,rgba(0,0,0,.112) 55.85%,rgba(0,0,0,.126) 59.35%,rgba(0,0,0,.144) 62.85%,rgba(0,0,0,.165) 66.35%,rgba(0,0,0,.188) 69.85%,rgba(0,0,0,.213) 73.35%,rgba(0,0,0,.237) 76.85%,rgba(0,0,0,.262) 80.35%,rgba(0,0,0,.285) 83.85%,rgba(0,0,0,.306) 87.35%,rgba(0,0,0,.324) 90.85%,rgba(0,0,0,.338) 94.35%,rgba(0,0,0,.347) 97.85%,#00000059);
+    }   
+
+    & .imgInfo, & .imgShadow {
+        opacity: 100%;
+    }
+}
+
+.imgInfo {
+    padding: 1.5rem 1.2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    div .infoBtn {
+        height: 32px;
+        margin-left: 0.5rem;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: #ffffffe6;
+        box-shadow: 0 1px 2px #0000000f;
+        opacity: 90%;
+        border: 1px solid #0000;
+        border-radius: 4px;
+        
+        color: #767676;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    div .infoBtn:hover {
+        opacity: 100%;
+        color: black;
+    }
+}
+
+.infoHeader {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.infoFooter {
+    height: 40px;
+
+    display: flex;
+    justify-content: space-between;
+
+    .user {
+        display: flex;
+        align-items: center;
+
+        img {
+            height: 32px;
+            width: 32px;
+
+            border-radius: 50%;
+        }
+
+        h1, h2, img {
+            cursor: pointer;
+        }
+
+        .userInfo {
+            margin-left: 0.6rem;
+            display: flex;
+            flex-direction: column;
+
+            h1, h2 {
+                opacity: 80%;
+                color: #fff;
+                font-family: 'Ubuntu', sans-serif;
+                font-size: 15px;
+                font-weight: 400;
+                line-height: 0.8;
+                text-shadow: 0 1px 8px #0000001a;
+            }
+
+            h2 {
+                font-size: 11px;
+            }
+
+            h1:hover,h2:hover {
+                opacity: 100%;
+            }
+        }
+    }
+}
