@@ -1,0 +1,55 @@
+.userTag {
+        display: flex;
+        align-items: center;
+
+        img {
+            height: 32px;
+            width: 32px;
+
+            border-radius: 50%;
+        }
+
+        h1, h2, img {
+            cursor: pointer;
+        }
+
+        .userInfo {
+            margin-left: 0.6rem;
+            display: flex;
+            flex-direction: column;
+
+            h1, h2 {
+                opacity: 80%;
+                font-family: 'Ubuntu', sans-serif;
+                font-size: 15px;
+                font-weight: 500;
+                line-height: 0.8;
+                text-shadow: 0 1px 8px #0000001a;
+            }
+
+            h2 {
+                font-size: 11px;
+                font-weight: 400;
+            }
+
+            h1:hover,h2:hover {
+                opacity: 100%;
+            }
+        }
+
+        .userInfo.white {
+            h1, h2 {
+                color: #fff !important;
+            }
+        }
+        
+        .userInfo.black {
+            h1 {
+                color: #111;
+            }
+
+            h2 {
+                color: #767676;
+            }
+        } 
+    }

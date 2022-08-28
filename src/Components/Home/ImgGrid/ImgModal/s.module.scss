@@ -1,0 +1,100 @@
+.imgModal {
+    height: auto;
+    min-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+    
+    div button {
+        height: 32px !important;
+        margin-left: 1rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        color: #767676;
+
+        .icon {
+            margin-right: 0.3rem;
+        }
+    }
+
+    div button:hover {
+        color: #413F42;
+    }
+}
+
+.modalHeader, .modalContent, .modalFooter {
+    display: flex;
+}
+
+.modalHeader {
+    justify-content: space-between;
+    padding-top: 1.4rem;
+
+    .headerBtns {
+        display: flex;
+
+        .downloadBtn {
+            color: #fff;
+            background-color: #3cb46e;
+
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+        }
+
+        .downloadBtn:hover {
+            color: #fff;
+            background-color: #35aa66;
+        }
+    }
+}
+
+.modalContent {
+    padding: 1.3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.imgMeta {
+    display: flex;
+
+    > div {
+        margin-right: 2rem;
+    }
+
+    .metaInfo {
+        display: flex;
+        flex-direction: column;
+
+        h1 {
+            color: rgb(118, 118, 118);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 0.5;
+        }
+
+        h2 {
+            color: #111;
+            font-size: 15px;
+            font-weight: 600;
+        }
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .imgMeta {
+        flex-direction: column;
+
+        .metaInfo:not(:first-child) {
+            margin-top: 0.5rem;
+        }
+    }
+}
