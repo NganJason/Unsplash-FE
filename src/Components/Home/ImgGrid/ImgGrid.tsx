@@ -4,7 +4,8 @@ import s from "./s.module.scss";
 import { useWindowDimensions } from "../../../_shared/hooks/useWindowDimensions";
 
 import ImgCard from "./ImgCard/ImgCard";
-
+import { Modal } from "antd";
+import ImgModal from "./ImgModal/ImgModal";
 
 const images = [
   "https://images.unsplash.com/photo-1657299142997-cb45f5dfa9ed?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
@@ -47,6 +48,7 @@ const getImgs = (
 const ImgGrid = (): JSX.Element => {
     const [columns, setColumns] = useState(3)
     const { width } = useWindowDimensions()
+    const [modalVisible, setModalVisible] = useState(false)
 
     useEffect(() => {
       if (width <= 600) {
@@ -59,25 +61,35 @@ const ImgGrid = (): JSX.Element => {
     }, [width])
 
     return (
-      <div
-        className={s.columnGrid}
-        style={{ "--cols": columns } as React.CSSProperties}
-      >
-        {
-          getImgs(images, columns).map((colImgs) => {
+      <div>
+        <div
+          className={s.columnGrid}
+          style={{ "--cols": columns } as React.CSSProperties}
+        >
+          {getImgs(images, columns).map((colImgs) => {
             return (
               <div className={s.rowGrid}>
-                {
-                  colImgs.map((imgUrl) => {
-                    return (
-                      <ImgCard imgUrl={imgUrl}/>
-                    );
-                  })
-                }
+                {colImgs.map((imgUrl) => {
+                  return <ImgCard imgUrl={imgUrl} onClick={()=>{setModalVisible(true);}}/>;
+                })}
               </div>
-            );    
-          })
-        }
+            );
+          })}
+        </div>
+        <Modal
+          title=""
+          maskClosable={true}
+          footer={null}
+          width={1000}
+          centered
+          style={{ padding: "2rem 1rem" }}
+          visible={modalVisible}
+          onCancel={(e) => {
+            setModalVisible(false)
+          }}
+        >
+          <ImgModal />
+        </Modal>
       </div>
     );
 }

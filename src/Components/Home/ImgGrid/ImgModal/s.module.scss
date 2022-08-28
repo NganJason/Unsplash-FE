@@ -1,0 +1,19 @@
+.imgModal {
+    height: auto;
+    min-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.modalHeader, .modalContent, .modalFooter {
+    display: flex;
+}
+
+.modalHeader {
+    justify-content: space-between;
+
+    .headerBtns {
+        display: flex;
+    }
+}
