@@ -1,0 +1,140 @@
+div.loginModal {
+    height: auto;
+    width: 90% !important;
+    max-width: 580px;
+
+    overflow: hidden;
+
+    div.ant-modal-body {
+        background-color: red;
+    }
+
+    .modalContainer {
+        width: 100%;
+        max-width: 500px;
+        margin: auto;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1, p, button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.2;
+        color: #111;
+    }
+
+    p {
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        color: #111;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    label {
+        color: #111;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    input {
+        border: 1px solid #767676;
+        border-radius: 3px;
+        min-height: 40px;
+    }
+
+    input:hover {
+        border-color: #111;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    button {
+        height: 44px;
+        width: 100%;
+        margin: auto;
+
+        border-radius: 4px;
+
+        background-color: #111;
+        box-shadow: 0 1px 1px #0000000a;
+        color: #fff;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 42px;
+    }
+
+    button:hover {
+        background-color: #111;
+        color: #fff;
+    }
+}
+
+.joinContainer {
+    height: 80px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    border-top: 1px solid #d1d1d1;
+    overflow: hidden;
+
+    p {
+        margin: auto;
+    }
+    
+    a {
+        margin-left: 5px;
+
+        text-decoration: underline;
+    }
+
+    a:hover {
+        color: #111;
+        text-decoration: underline;
+    }
+}
+
+.strokeLeft {
+    stroke: #d1d1d1;
+    stroke-linecap: round;
+    fill: none;
+    stroke-width: 1.5;
+
+    position: absolute;
+    left: 20px;
+    bottom: 0px;
+}
+
+.strokeRight {
+    stroke: #d1d1d1;
+    stroke-linecap: round;
+    fill: none;
+    stroke-width: 1.5;
+
+    position: absolute;
+    right: 5px;
+    top: -5px;
+}
