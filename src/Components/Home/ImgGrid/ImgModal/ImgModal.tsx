@@ -7,7 +7,13 @@ import { AiFillLike } from "react-icons/ai";
 import { GoPlus } from "react-icons/go";
 import { FaShare } from "react-icons/fa"
 
-const ImgModal = (): JSX.Element => {
+type ImgModalProps = {
+  imgUrl: string;
+}
+
+const ImgModal = (props: ImgModalProps): JSX.Element => {
+  const { imgUrl } = props
+
   return (
     <div className={s.imgModal}>
       <div className={s.modalHeader}>
@@ -19,7 +25,7 @@ const ImgModal = (): JSX.Element => {
         </div>
       </div>
       <div className={s.modalContent}>
-        <Image src="https://images.unsplash.com/photo-1657299142997-cb45f5dfa9ed?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
+        <Image src={imgUrl} />
       </div>
       <div className={s.modalFooter}>
         <div className={s.imgMeta}>

@@ -56,6 +56,11 @@
     padding: 1.3rem;
     display: flex;
     justify-content: center;
+
+    img {
+        height: 600px;
+        object-fit: contain;
+    }
 }
 
 .modalFooter {

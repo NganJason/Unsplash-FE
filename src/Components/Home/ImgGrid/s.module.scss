@@ -138,3 +138,39 @@
         opacity: 100%;
     }
 }
+
+.modal {
+    position: relative;
+
+    .nextBtn {
+        width: 50px;
+        height: 50px;
+        
+        display: flex;
+
+        position: absolute;
+        top: 50%;
+
+        color: #d1d1d1;
+        cursor: pointer;
+        opacity: 80%;
+    }
+
+    .nextBtn:hover {
+        opacity: 100;
+    }
+
+    .nextBtn.left {
+        left: calc(0% - 75px);
+    }
+
+    .nextBtn.right {
+        left: calc(100% + 25px);
+    }
+}
+
+@media only screen and (max-width: 800px) {
+  .nextBtn {
+    display: none;
+  }
+}

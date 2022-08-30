@@ -1,3 +1,4 @@
+import Modal from 'antd/lib/modal/Modal';
 import React from 'react';
 import './App.css';
 import Home from './Components/Home/Home';
@@ -9,6 +10,7 @@ function App() {
     <div className="App">
         <Nav></Nav>
         <Home/>
+        <Modal/>
     </div>
   );
 }
