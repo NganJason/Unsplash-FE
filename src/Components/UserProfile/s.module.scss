@@ -1,0 +1,94 @@
+.userProfileContainer {
+    height: auto;
+    width: 100%;
+    padding: 3rem 2rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.userProfile {
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    margin-top: 1rem;
+
+    display: flex;
+    justify-content: center;
+
+    img {
+        height: 150px;
+        width: 150px;
+
+        border-radius: 50%;
+    }
+}
+
+.userInfo {
+    margin-left: 2rem;
+
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 43px;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    p {
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.6;
+    }
+}
+
+.userPhotos {
+    width: 100%;
+    margin-top: 3rem;
+    display: flex;
+
+    .tabs {
+        width: 100%;
+        
+        .tabTitle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .firstTab {
+            margin-left: 1rem;
+        }
+
+        .tabIcon {
+            width:18px;
+            height: 18px;
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .userProfileContainer {
+        padding: 3rem 0rem;
+    }
+
+  .userProfile {
+    flex-direction: column;
+  }
+
+  .userInfo {
+    margin-left: 0rem;
+    margin-top: 2rem;
+
+    h1 {
+        font-size: 21px;
+    }
+  }
+}

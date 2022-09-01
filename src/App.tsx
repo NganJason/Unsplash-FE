@@ -4,6 +4,7 @@ import './App.css';
 import Home from './Components/Home/Home';
 import LoginModal from './Components/LoginModal/LoginModal';
 import Signup from './Components/Signup/Signup';
+import UserProfile from './Components/UserProfile/UserProfile';
 
 import Nav from './_shared/Components/Nav/Nav';
 
@@ -21,7 +22,9 @@ function App() {
       <Routes>
         <Route path="/" element={withNav(<Home />)} />
         <Route path="/login" element={withNav(<Home />)} />
-        <Route path="/signup" element={<Signup/>} />
+        <Route path="/signup" element={<Signup />} />
+
+        <Route path="/user" element={withNav(<UserProfile />)} />
       </Routes>
       <LoginModal />
     </div>

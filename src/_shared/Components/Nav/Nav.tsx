@@ -9,14 +9,15 @@ import { Link } from "react-router-dom";
 const unsplashIcon =
   "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/unsplash-512.png";
 
-
 const Nav = (): JSX.Element => {
   const location = useLocation();
 
     return (
       <div className={s.nav}>
         <div className={s.navBrand}>
-          <img src={unsplashIcon} />
+          <Link to="/">
+            <img src={unsplashIcon} />
+          </Link>
         </div>
 
         <div className={s.navMiddle}>
