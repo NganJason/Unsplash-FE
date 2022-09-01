@@ -1,5 +1,6 @@
 import React from "react"
 import s from "./s.module.scss";
+import { useLocation } from "react-router-dom";
 
 import { MenuOutlined } from "@ant-design/icons";
 import SearchBar from "./Searchbar/Searchbar";
@@ -10,6 +11,8 @@ const unsplashIcon =
 
 
 const Nav = (): JSX.Element => {
+  const location = useLocation();
+
     return (
       <div className={s.nav}>
         <div className={s.navBrand}>
@@ -22,9 +25,15 @@ const Nav = (): JSX.Element => {
 
         <div className={s.navRight}>
           <div className={s.navSetting}>
-            <Link to="/login">
-              <p>Login / Sign up</p>
-            </Link>
+            <p>
+              <Link className={s.link} to={location.pathname + "?login=true"}>
+                Login
+              </Link>{" "}
+              {" / "}
+              <Link className={s.link} to="/signup">
+                Signup
+              </Link>
+            </p>
           </div>
 
           <MenuOutlined className={s.hamburger} />

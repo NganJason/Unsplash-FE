@@ -2,20 +2,23 @@ import { Button, Form, Input } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React from "react";
 import s from "./s.module.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 const LoginModal = (): JSX.Element => {
-    const [loginModalVisible, setLoginModalVisible] = React.useState(true)
+    const [loginModalVisible, setLoginModalVisible] = React.useState(false)
     const location = useLocation()
     const navigate = useNavigate()
+    const [search] = useSearchParams();
 
     React.useEffect(() => {
-        if (location.pathname === "/login") {
-            setLoginModalVisible(true)
-        } else {
-            setLoginModalVisible(false)
-        }
-    },[location])
+      let isLogin = search.get("login")
+
+      if (isLogin) {
+        setLoginModalVisible(true);
+      } else {
+        setLoginModalVisible(false);
+      }
+    },[search])
 
     return (
       <div>
@@ -28,7 +31,7 @@ const LoginModal = (): JSX.Element => {
           centered
           visible={loginModalVisible}
           onCancel={() => {
-            navigate("/")
+            navigate(location.pathname);
           }}
           className={s.loginModal}
         >

@@ -1,4 +1,5 @@
 export const hamburger: string;
+export const link: string;
 export const nav: string;
 export const navBrand: string;
 export const navMiddle: string;
