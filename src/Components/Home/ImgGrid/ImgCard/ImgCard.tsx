@@ -17,8 +17,11 @@ type ImgCardProps = {
 const ImgCard = (props: ImgCardProps) => {
     const { imgUrl, onClick } = props
     return (
-      <div className={s.imgGrid} onClick={onClick}>
-        <img src={imgUrl} alt="card_img"/>
+      <div
+        className={s.imgGrid}
+        onClick={onClick}
+      >
+        <img src={imgUrl} alt="card_img" />
         <div className={s.imgShadow}></div>
 
         <div className={s.imgInfo}>
@@ -28,6 +31,9 @@ const ImgCard = (props: ImgCardProps) => {
               type="primary"
               icon={<GoPlus />}
               size="large"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             />
 
             <Button
@@ -35,16 +41,22 @@ const ImgCard = (props: ImgCardProps) => {
               type="primary"
               icon={<AiFillLike />}
               size="large"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             />
           </div>
 
           <div className={s.infoFooter}>
-            <UserTag textColor="white"/>
+            <UserTag textColor="white" />
             <Button
               className={s.infoBtn}
               type="primary"
               icon={<AiOutlineArrowDown />}
               size="large"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             />
           </div>
         </div>

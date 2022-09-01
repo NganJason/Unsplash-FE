@@ -2,6 +2,7 @@ import React from "react";
 import s from "./s.module.scss";
 
 import { Tabs } from "antd";
+import ImgGrid from "../Home/ImgGrid/ImgGrid";
 import { HiPhotograph } from "react-icons/hi";
 import { AiTwotoneLike } from "react-icons/ai"
 
@@ -34,7 +35,11 @@ const UserProfile = (): JSX.Element => {
                 </span>
               }
               key="1"
-            ></TabPane>
+            >
+              <div className={s.userImages}>
+                <ImgGrid />
+              </div>
+            </TabPane>
             <TabPane
               tab={
                 <span className={s.tabTitle}>
@@ -43,7 +48,11 @@ const UserProfile = (): JSX.Element => {
                 </span>
               }
               key="2"
-            ></TabPane>
+            >
+              <div className={s.userImages}>
+                <ImgGrid />
+              </div>
+            </TabPane>
           </Tabs>
         </div>
       </div>
