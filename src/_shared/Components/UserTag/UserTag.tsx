@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import s from "./s.module.scss";
 
 const rabbidImg =
@@ -16,11 +17,17 @@ const UserTag = (props: UserTagProps): JSX.Element => {
 
     return (
       <div className={s.userTag}>
-        <img src={rabbidImg} />
+        <Link to="/user">
+          <img src={rabbidImg} />
+        </Link>
 
         <div className={`${s.userInfo} ${s[textColor]}`}>
-          <h1>Jason Ngan</h1>
-          <h2>Available to hire</h2>
+          <Link to="/user">
+            <h1>Jason Ngan</h1>
+          </Link>
+          <Link to="/user">
+            <h2>Available to hire</h2>
+          </Link>
         </div>
       </div>
     );
