@@ -19,10 +19,16 @@ export function responseHandler(
     requestFunc(...args)
       .then(async (res) => {
         // Check whether response status is valid
-        if (res.status >= 400) {
-          throw new ApiError(`${res.status} ${res.statusText}`);
-        }
         const resData = await res.json();
+
+        if (res.status >= 400) {
+          if (resData.debug_msg) {
+            throw new ApiError(`${res.status} ${resData.debug_msg}`);
+          } else {
+            throw new ApiError(`${res.status} ${res.statusText}`);
+          }
+        }
+        
         // Handle redirection
         if (res.status === 302) {
           window.location.href = resData.data.redirect_url;

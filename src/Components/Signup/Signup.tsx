@@ -18,9 +18,9 @@ const Signup = (): JSX.Element => {
     const { signup } = useAuth()
     const [form] = Form.useForm()
 
-    const signupHandler = () => {
+    const signupHandler = async () => {
       try {
-        signup(
+        await signup(
           form.getFieldValue(EMAIL),
           form.getFieldValue(PASSWORD),
           form.getFieldValue(USERNAME),
@@ -28,7 +28,7 @@ const Signup = (): JSX.Element => {
           form.getFieldValue(LAST_NAME)
         );
 
-        navigate("/");
+        navigate("/")
       } catch(err) {}
     }
 
