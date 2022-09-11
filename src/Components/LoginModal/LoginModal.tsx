@@ -3,12 +3,18 @@ import Modal from "antd/lib/modal/Modal";
 import React from "react";
 import s from "./s.module.scss";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+
+const EMAIL = "email"
+const PASSWORD = "password"
 
 const LoginModal = (): JSX.Element => {
     const [loginModalVisible, setLoginModalVisible] = React.useState(false)
     const location = useLocation()
     const navigate = useNavigate()
     const [search] = useSearchParams();
+    const [form] = Form.useForm();
+    const { login } = useAuth()
 
     React.useEffect(() => {
       let isLogin = search.get("login")
@@ -19,6 +25,13 @@ const LoginModal = (): JSX.Element => {
         setLoginModalVisible(false);
       }
     },[search])
+
+    const loginHandler = () => {
+      login(
+        form.getFieldValue(EMAIL),
+        form.getFieldValue(PASSWORD)
+      )
+    }
 
     return (
       <div>
@@ -39,17 +52,29 @@ const LoginModal = (): JSX.Element => {
             <h1>Login</h1>
             <p>Welcome back</p>
 
-            <Form layout="vertical">
-              <Form.Item label="Email" name="email">
+            <Form layout="vertical" form={form}>
+              <Form.Item
+                label="Email"
+                name={EMAIL}
+                rules={[{ required: true, message: "Email cannot be empty" }]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Password" name="password">
-                <Input />
+              <Form.Item
+                label="Password"
+                name={PASSWORD}
+                rules={[
+                  { required: true, message: "Password cannot be empty" },
+                ]}
+              >
+                <Input type="password"/>
               </Form.Item>
 
               <Form.Item>
-                <Button>Login</Button>
+                <Button onClick={loginHandler} htmlType="submit">
+                  Login
+                </Button>
               </Form.Item>
             </Form>
           </div>

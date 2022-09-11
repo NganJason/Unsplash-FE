@@ -6,7 +6,7 @@ import {
 
 const errorMessages = {};
 
-export const dQueueRequest = clientApis(undefined, {
+export const unsplashRequest = clientApis(undefined, {
   fetch: responseHandler(
     fetch,
     {...errorMessages }
@@ -15,5 +15,6 @@ export const dQueueRequest = clientApis(undefined, {
     headers: {
       "Request-Id": uuid.v4(),
     },
+    credentials: "include"
   }),
 });

@@ -3,9 +3,28 @@ import s from "./s.module.scss";
 import { Link, useLocation } from "react-router-dom";
 
 import { Button, Form, Input } from "antd";
+import { useAuth } from "../../hooks/useAuth";
+
+const EMAIL = "email"
+const PASSWORD = "password"
+const USERNAME = "username"
+const FIRST_NAME = "first_name"
+const LAST_NAME = "last_name"
 
 const Signup = (): JSX.Element => {
     const location = useLocation();
+    const { signup } = useAuth()
+    const [form] = Form.useForm()
+
+    const signupHandler = () => {
+      signup(
+        form.getFieldValue(EMAIL),
+        form.getFieldValue(PASSWORD),
+        form.getFieldValue(USERNAME),
+        form.getFieldValue(FIRST_NAME),
+        form.getFieldValue(LAST_NAME)
+      )
+    }
 
     return (
       <div className={s.signupContainer}>
@@ -37,31 +56,53 @@ const Signup = (): JSX.Element => {
               <a href={location.pathname + "?login=true"}>Login</a>
             </p>
 
-            <Form layout="vertical" className={s.inlineForm}>
-              <Form.Item label="First name">
+            <Form layout="vertical" className={s.inlineForm} form={form}>
+              <Form.Item label="First name" name={FIRST_NAME}>
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Last name">
+              <Form.Item label="Last name" name={LAST_NAME}>
                 <Input />
               </Form.Item>
             </Form>
 
-            <Form layout="vertical" className={s.verticalForm}>
-              <Form.Item label="Email">
+            <Form
+              layout="vertical"
+              className={s.verticalForm}
+              form={form}
+            >
+              <Form.Item
+                label="Email"
+                name={EMAIL}
+                rules={[{ required: true, message: "Email cannot be empty" }]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Username">
+              <Form.Item
+                label="Username"
+                name={USERNAME}
+                rules={[
+                  { required: true, message: "Username cannot be empty" },
+                ]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Password">
-                <Input />
+              <Form.Item
+                label="Password"
+                name={PASSWORD}
+                rules={[
+                  { required: true, message: "Password cannot be empty" },
+                ]}
+              >
+                <Input type="password" />
               </Form.Item>
 
               <Form.Item>
-                <Button>Join</Button>
+                <Button onClick={signupHandler} htmlType="submit">
+                  Join
+                </Button>
               </Form.Item>
             </Form>
           </div>
