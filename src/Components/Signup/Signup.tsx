@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./s.module.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Button, Form, Input } from "antd";
 import { useAuth } from "../../hooks/useAuth";
@@ -13,17 +13,23 @@ const LAST_NAME = "last_name"
 
 const Signup = (): JSX.Element => {
     const location = useLocation();
+    const navigate = useNavigate();
+
     const { signup } = useAuth()
     const [form] = Form.useForm()
 
     const signupHandler = () => {
-      signup(
-        form.getFieldValue(EMAIL),
-        form.getFieldValue(PASSWORD),
-        form.getFieldValue(USERNAME),
-        form.getFieldValue(FIRST_NAME),
-        form.getFieldValue(LAST_NAME)
-      )
+      try {
+        signup(
+          form.getFieldValue(EMAIL),
+          form.getFieldValue(PASSWORD),
+          form.getFieldValue(USERNAME),
+          form.getFieldValue(FIRST_NAME),
+          form.getFieldValue(LAST_NAME)
+        );
+
+        navigate("/");
+      } catch(err) {}
     }
 
     return (

@@ -19,8 +19,6 @@ const withNav = (component: JSX.Element): JSX.Element => {
   );
 }
 function App() {
-  const { user } = useUser()
-
   return (
     <div className="App">
       <Routes>
@@ -28,7 +26,7 @@ function App() {
         <Route path="/login" element={withNav(<Home />)} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/user" element={withNav(<UserProfile />)} />
+        <Route path="/profile" element={withNav(<UserProfile />)} />
       </Routes>
       <LoginModal />
     </div>
