@@ -1,12 +1,14 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+
 import Home from './Components/Home/Home';
 import LoginModal from './Components/LoginModal/LoginModal';
 import Signup from './Components/Signup/Signup';
 import UserProfile from './Components/UserProfile/UserProfile';
 
 import Nav from './_shared/Components/Nav/Nav';
+import { useUser } from './hooks/useUser';
 
 const withNav = (component: JSX.Element): JSX.Element => {
   return (
@@ -17,6 +19,8 @@ const withNav = (component: JSX.Element): JSX.Element => {
   );
 }
 function App() {
+  const { user } = useUser()
+
   return (
     <div className="App">
       <Routes>

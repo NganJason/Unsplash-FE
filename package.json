@@ -12,6 +12,7 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "antd": "^4.22.7",
+    "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
@@ -22,6 +23,7 @@
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
+  "proxy": "http://localhost:8082",
   "scripts": {
     "start": "typed-scss-modules src --watch & react-scripts start",
     "build": "typed-scss-modules src --watch & react-scripts build",
