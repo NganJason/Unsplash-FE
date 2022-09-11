@@ -1,3 +1,4 @@
+export const dropdownItem: string;
 export const hamburger: string;
 export const link: string;
 export const nav: string;

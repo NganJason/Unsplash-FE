@@ -42,6 +42,12 @@ export interface LoginUserResponse {
   user: User | null;
 }
 
+export interface LogoutRequest {}
+
+export interface LogoutResponse {
+  debug_msg?: string;
+}
+
 export interface GetUserRequest {};
 
 export interface GetUserResponse {
@@ -162,6 +168,20 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
         );
       },
     },
+    logout: {
+      path: "/api/user/logout",
+      post: (data: LogoutRequest, requestInit?: RequestInit) => {
+        const path = "/api/user/logout";
+
+        return request<LogoutRequest, LogoutResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      }
+    }
   };
   return clients;
 }

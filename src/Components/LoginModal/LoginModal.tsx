@@ -31,6 +31,9 @@ const LoginModal = (): JSX.Element => {
         form.getFieldValue(EMAIL),
         form.getFieldValue(PASSWORD)
       )
+
+      navigate(location.pathname);
+      window.location.reload();
     }
 
     return (

@@ -10,7 +10,7 @@ interface UseAuth {
         username?: string,
         firstName?: string,
         lastName?: string) => Promise<void>;
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 export function useAuth(): UseAuth {
@@ -53,11 +53,20 @@ export function useAuth(): UseAuth {
       if (err instanceof Error) {
         message.error(err.message);
       }
+
+      throw err
     }
   }
 
-  function logout(): void {
-    clearUser();
+  async function logout(): Promise<void> {
+    try {
+      await unsplashRequest.logout.post({});
+      clearUser();
+    } catch (err) {
+      if (err instanceof Error) {
+        message.error(err.message);
+      }
+    }
   }
 
   return {
