@@ -1,4 +1,5 @@
 export const dropdownItem: string;
+export const dropdownItemLast: string;
 export const hamburger: string;
 export const link: string;
 export const nav: string;

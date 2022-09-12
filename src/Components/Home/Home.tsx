@@ -25,7 +25,6 @@ const Home = (): JSX.Element => {
             </div>
           </div>
         </div>
-
         <div className={s.gridContent}>
           <ImgGrid/>
         </div>

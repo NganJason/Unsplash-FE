@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import s from "./s.module.scss";
 
-import { useWindowDimensions } from "../../../_shared/hooks/useWindowDimensions";
+import { Modal } from "antd";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 import ImgCard from "./ImgCard/ImgCard";
-import { Modal } from "antd";
 import ImgModal from "./ImgModal/ImgModal";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+
+import { useGridColumns } from "../../../_shared/hooks/imgGrid/useGridColumns";
+import { useImages } from "../../../_shared/hooks/imgGrid/useImages";
 
 const images = [
   "https://images.unsplash.com/photo-1657299142997-cb45f5dfa9ed?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
@@ -28,49 +30,16 @@ const images = [
   "https://images.unsplash.com/photo-1661443066898-45c0b2a1c396?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyOXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
 ];
 
-const getImgs = (
-  images: string[], 
-  cols: number
-): Array<string[]> => {
-  if (cols === 0) {
-    return []
-  }
-
-  let imgs = new Array(cols).fill(0).map(() => new Array(0))
-
-  for (let i = 0; i < images.length; i++) {
-    let idx = i % cols
-    imgs[idx].push(images[i])
-  }
-
-  return imgs
-}
-
 const ImgGrid = (): JSX.Element => {
-    const [columns, setColumns] = useState(3)
-    const { width } = useWindowDimensions()
+    const [modalVisible, setModalVisible] = useState(false);
+    const { columns } = useGridColumns();
+    const { imgs, fetchNextPage } = useImages(columns)
 
-    const [imgs, setImgs] = useState<Array<string[]>>([[""]])
-    const [modalVisible, setModalVisible] = useState(false)
-    const [imgRowCol, setImgRowCol] = useState([0, 0]);
-
-    useEffect(() => {
-      if (width <= 600) {
-        setColumns(1)
-      } else if (width <= 900) {
-        setColumns(2)
-      } else {
-        setColumns(3)
-      }
-    }, [width])
-
-    useEffect(() => {
-      setImgs(getImgs(images, columns))
-    }, [columns])
+    const [currRow, setCurrRow] = useState(0);
+    const [currCol, setCurrCol] = useState(0)
 
     const setPrevRowCol = () => {
       let prevRow, prevCol
-      let [currCol, currRow] = imgRowCol
 
       if (currCol === 0 && currRow === 0) {
         return
@@ -84,12 +53,12 @@ const ImgGrid = (): JSX.Element => {
         prevRow = currRow
       }
 
-      setImgRowCol([prevCol, prevRow])
+      setCurrCol(prevCol)
+      setCurrRow(prevRow)
     }
 
     const setNextRowCol = () => {
       let nextRow, nextCol
-      let [currCol, currRow] = imgRowCol;
 
       if (currCol === columns - 1) {
         nextCol = 0
@@ -99,7 +68,12 @@ const ImgGrid = (): JSX.Element => {
         nextRow = currRow
       }
 
-      setImgRowCol([nextCol, nextRow])
+      if (imgs[nextCol][nextRow] === undefined) {
+        return
+      }
+
+      setCurrCol(nextCol)
+      setCurrRow(nextRow)
     }
 
     return (
@@ -108,15 +82,16 @@ const ImgGrid = (): JSX.Element => {
           className={s.columnGrid}
           style={{ "--cols": columns } as React.CSSProperties}
         >
-          {getImgs(images, columns).map((colImgs, col) => {
+          {imgs.map((colImgs, col) => {
             return (
               <div className={s.rowGrid}>
-                {colImgs.map((imgUrl, row) => {
+                {colImgs.map((img, row) => {
                   return (
                     <ImgCard
-                      imgUrl={imgUrl}
+                      imgUrl={img.url || ""}
                       onClick={() => {
-                        setImgRowCol([col, row]);
+                        setCurrCol(col)
+                        setCurrRow(row)
                         setModalVisible(true);
                       }}
                     />
@@ -138,16 +113,16 @@ const ImgGrid = (): JSX.Element => {
             setModalVisible(false);
           }}
           className={s.modal}
-        >
-          <ImgModal
-            imgUrl={imgs[imgRowCol[0]][imgRowCol[1]]}
-          />
-
+        > 
+          <ImgModal imgUrl={imgs[currCol][currRow]?.url || ""} />
           <AiOutlineLeft
             className={`${s.nextBtn} ${s.left}`}
             onClick={setPrevRowCol}
           />
-          <AiOutlineRight className={`${s.nextBtn} ${s.right}`} onClick={setNextRowCol}/>
+          <AiOutlineRight
+            className={`${s.nextBtn} ${s.right}`}
+            onClick={setNextRowCol}
+          />
         </Modal>
       </div>
     );
