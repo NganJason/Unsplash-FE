@@ -85,6 +85,10 @@
     }
 }
 
+.dropdownItemLast {
+    border-top: 1px solid #CFD2CF;
+}
+
 @media only screen and (max-width: 800px) {
     .navSetting {
         display: none;

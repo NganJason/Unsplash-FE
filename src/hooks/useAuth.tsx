@@ -28,6 +28,8 @@ export function useAuth(): UseAuth {
       if (err instanceof Error) {
         message.error(err.message);
       }
+
+      throw err
     }
   }
 

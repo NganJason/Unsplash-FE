@@ -24,7 +24,7 @@ const profileMenu = (menuOnClickHandler: MenuProps["onClick"]): JSX.Element => {
       onClick={menuOnClickHandler}
       items={[
         {
-          key: "1",
+          key: "profile",
           label: (
             <div className={s.dropdownItem}>
               <CgProfile />
@@ -33,9 +33,9 @@ const profileMenu = (menuOnClickHandler: MenuProps["onClick"]): JSX.Element => {
           ),
         },
         {
-          key: "2",
+          key: "logout",
           label: (
-            <div className={s.dropdownItem}>
+            <div className={`${s.dropdownItem} ${s.dropdownItemLast}`}>
               <RiLogoutBoxRLine />
               <p>Logout</p>
             </div>
@@ -52,7 +52,7 @@ const Nav = (): JSX.Element => {
   const { logout } = useAuth();
 
   const menuOnClickHandler: MenuProps["onClick"] = (e) => {
-    if (e.key === "2") {
+    if (e.key === "logout") {
       logout();
       window.location.reload();
     }

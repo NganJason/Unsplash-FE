@@ -76,6 +76,26 @@ export interface CreateUserResponse {
   user: User | null;
 }
 
+export interface GetImagesRequest {
+  page_size?: number;
+  cursor?: string | null;
+}
+
+export interface GetImagesResponse {
+  debug_msg?: string;
+  images?: Image[];
+  next_cursor?: string;
+}
+
+export interface Image {
+  id?: number;
+  user?: User;
+  url?: string;
+  desc?: string;
+  likes?: number;
+  downloads?: number;
+}
+
 export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
   const _request = createRequester({
     request: opts?.fetch,
@@ -174,6 +194,20 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
         const path = "/api/user/logout";
 
         return request<LogoutRequest, LogoutResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      }
+    },
+    getImages: {
+      path: "/api/image/get_all",
+      post: (data: GetImagesRequest, requestInit?: RequestInit) => {
+        const path = "/api/image/get_all";
+
+        return request<GetImagesRequest, GetImagesResponse>(
           baseUrl + path,
           "post",
           data,
