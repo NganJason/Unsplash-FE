@@ -8,7 +8,6 @@ import Signup from './Components/Signup/Signup';
 import UserProfile from './Components/UserProfile/UserProfile';
 
 import Nav from './_shared/Components/Nav/Nav';
-import { useUser } from './hooks/useUser';
 
 const withNav = (component: JSX.Element): JSX.Element => {
   return (

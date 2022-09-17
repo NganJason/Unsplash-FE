@@ -61,6 +61,7 @@ export interface User {
   email_address?: string;
   first_name?: string;
   last_name?: string;
+  profile_url?: string;
 };
 
 export interface CreateUserRequest {

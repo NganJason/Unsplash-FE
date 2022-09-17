@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery, UseQueryOptions } from "react-query";
 import { unsplashRequest } from "../api";
-import { GetImagesRequest, GetImagesResponse, GetUserRequest, GetUserResponse, Image, User } from "../api/client"
+import { GetImagesResponse, GetUserRequest, GetUserResponse, User } from "../api/client"
 
 export enum QueryKeys {
     GET_USER = 'GET_USER',
@@ -30,7 +30,7 @@ export const useGetImagesQuery = () => {
   const fetchImage = async ({pageParam = null}): Promise<GetImagesResponse> => {
     const response: GetImagesResponse = await unsplashRequest.getImages.post({
       cursor: pageParam,
-      page_size: 1
+      page_size: 10
     })
 
     return response

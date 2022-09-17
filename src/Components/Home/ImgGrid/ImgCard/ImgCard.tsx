@@ -5,17 +5,17 @@ import { Button } from "antd";
 import { AiFillLike, AiOutlineArrowDown } from "react-icons/ai";
 import { GoPlus } from "react-icons/go";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
+import { Image } from "../../../../_shared/api/client";
 
-const rabbidImg =
-  "https://i.pinimg.com/280x280_RS/e3/6c/c3/e36cc3cc4da34e439c87c0b9d513dca2.jpg";
 
 type ImgCardProps = {
+    img: Image;
     imgUrl: string;
     onClick: () => void;
 }
 
 const ImgCard = (props: ImgCardProps) => {
-    const { imgUrl, onClick } = props
+    const { img, imgUrl, onClick } = props
     return (
       <div
         className={s.imgGrid}
@@ -48,7 +48,7 @@ const ImgCard = (props: ImgCardProps) => {
           </div>
 
           <div className={s.infoFooter}>
-            <UserTag textColor="white" />
+            <UserTag user={img.user} textColor="white" />
             <Button
               className={s.infoBtn}
               type="primary"
