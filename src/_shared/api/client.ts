@@ -41,9 +41,9 @@ export interface LogoutResponse {
   debug_msg?: string;
 }
 
-export interface GetUserRequest {};
+export interface VerifyUserRequest {};
 
-export interface GetUserResponse {
+export interface VerifyUserResponse {
   debug_msg?: string;
   user: User | null;
 };
@@ -66,6 +66,15 @@ export interface CreateUserRequest {
 }
 
 export interface CreateUserResponse {
+  debug_msg?: string;
+  user: User | null;
+}
+
+export interface GetUserRequest {
+  user_id?: number;
+}
+
+export interface GetUserResponse {
   debug_msg?: string;
   user: User | null;
 }
@@ -169,12 +178,12 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
         );
       },
     },
-    getUser: {
-      path: "/api/user/get",
-      post: (data: GetUserRequest, requestInit?: RequestInit) => {
-        const path = "/api/user/get";
+    verifyUser: {
+      path: "/api/user/verify",
+      post: (data: VerifyUserRequest, requestInit?: RequestInit) => {
+        const path = "/api/user/verify";
 
-        return request<GetUserRequest, GetUserResponse>(
+        return request<VerifyUserRequest, VerifyUserResponse>(
           baseUrl + path,
           "post",
           data,
@@ -196,6 +205,20 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
           requestInit
         );
       },
+    },
+    getUser: {
+      path: "/api/user/get",
+      post: (data: GetUserRequest, requestInit?: RequestInit) => {
+        const path = "/api/user/get";
+
+        return request<GetUserRequest, GetUserResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      }
     },
     logout: {
       path: "/api/user/logout",

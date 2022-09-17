@@ -1,29 +1,51 @@
 import { useInfiniteQuery, useQuery, UseQueryOptions } from "react-query";
 import { unsplashRequest } from "../api";
-import { GetImagesResponse, GetUserRequest, GetUserResponse, User } from "../api/client"
+import { GetImagesResponse, VerifyUserRequest, VerifyUserResponse, User, GetUserResponse } from "../api/client"
 
 export enum QueryKeys {
-    GET_USER = 'GET_USER',
-    GET_IMAGES = 'GET_IMAGES'
+  VERIFY_USER = "VERIFY_USER",
+  GET_USER = "GET_USER",
+  GET_IMAGES = "GET_IMAGES",
 }
 
-export const useGetUserQuery = (
-    params: GetUserRequest,
+export const useVerifyUserQuery = (
+    params: VerifyUserRequest,
     options?: UseQueryOptions<User | null>
 ) => {
-    const getUserFetch = async (): Promise<User | null> => {
-        const response: GetUserResponse = await unsplashRequest.getUser.post(
-            params as GetUserRequest
+    const verifyUserFetch = async (): Promise<User | null> => {
+        const response: VerifyUserResponse = await unsplashRequest.verifyUser.post(
+            params as VerifyUserRequest
         );
 
         return response.user
     }
 
     return useQuery<User | null>(
-      [QueryKeys.GET_USER],
-      getUserFetch,
+      [QueryKeys.VERIFY_USER],
+      verifyUserFetch,
       options
     );
+}
+
+export const useGetUserQuery = (
+  userID: number,
+  options?: UseQueryOptions<User | null>
+) => {
+  const getUserFetch = async (): Promise<User | null> => {
+    const response: GetUserResponse = await unsplashRequest.getUser.post(
+      {
+        user_id: userID
+      }
+    );
+
+    return response.user
+  }
+
+  return useQuery<User | null>(
+    [QueryKeys.GET_USER],
+    getUserFetch,
+    options
+  );
 }
 
 export const useGetImagesQuery = () => {

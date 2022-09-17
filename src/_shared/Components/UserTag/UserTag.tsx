@@ -15,12 +15,12 @@ const UserTag = (props: UserTagProps): JSX.Element => {
 
     return (
       <div className={s.userTag}>
-        <Link to="/user">
+        <Link to={`/user?id=${user?.id}`}>
           <img src={user?.profile_url || ""} />
         </Link>
 
         <div className={`${s.userInfo} ${s[textColor]}`}>
-          <Link to="/user">
+          <Link to={`/user?id=${user?.id}`}>
             <h1>{user?.username || ""}</h1>
           </Link>
         </div>

@@ -25,7 +25,7 @@ function App() {
         <Route path="/login" element={withNav(<Home />)} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/profile" element={withNav(<UserProfile />)} />
+        <Route path="/user" element={withNav(<UserProfile />)} />
       </Routes>
       <LoginModal />
     </div>

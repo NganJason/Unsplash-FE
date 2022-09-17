@@ -78,6 +78,15 @@
     }
 }
 
+.loadingSpin {
+    min-height: 100vh;
+    min-width: 100vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media only screen and (max-width: 800px) {
     .userProfileContainer {
         padding: 3rem 0rem;

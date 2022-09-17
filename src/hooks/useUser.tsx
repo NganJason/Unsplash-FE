@@ -1,6 +1,6 @@
 import { useQueryClient } from "react-query";
 import { User } from "../_shared/api/client";
-import { QueryKeys, useGetUserQuery } from "../_shared/queries/unsplash";
+import { QueryKeys, useVerifyUserQuery } from "../_shared/queries/unsplash";
 import { useLocation } from "react-router-dom";
 
 interface UseUser {
@@ -29,7 +29,7 @@ export function useUser(): UseUser {
     const queryClient = useQueryClient();
     const location = useLocation();
 
-    const { data: user } = useGetUserQuery(
+    const { data: user } = useVerifyUserQuery(
         {},
         {
             refetchOnWindowFocus: true,
@@ -40,11 +40,11 @@ export function useUser(): UseUser {
     )
 
     function updateUser(newUser: User | null): void {
-        queryClient.setQueryData(QueryKeys.GET_USER, newUser);
+        queryClient.setQueryData(QueryKeys.VERIFY_USER, newUser);
     }
 
     function clearUser(): void {
-        queryClient.setQueryData(QueryKeys.GET_USER, null)
+        queryClient.setQueryData(QueryKeys.VERIFY_USER, null)
     }
 
     return { user, updateUser, clearUser }
