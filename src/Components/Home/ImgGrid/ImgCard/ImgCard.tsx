@@ -1,11 +1,12 @@
 import React from "react";
 import s from "./s.module.scss";
 
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { AiFillLike, AiOutlineArrowDown } from "react-icons/ai";
 import { GoPlus } from "react-icons/go";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
 import { Image } from "../../../../_shared/api/client";
+import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
 
 
 type ImgCardProps = {
@@ -16,6 +17,25 @@ type ImgCardProps = {
 
 const ImgCard = (props: ImgCardProps) => {
     const { img, imgUrl, onClick } = props
+
+    const { mutate: likeImage, isLoading: isLikeImageLoading } =
+      useLikeImageMutation({
+        onError: (err): void => {
+          if (err instanceof Error) {
+            message.error(err.message);
+          }
+        },
+      });
+
+    const { mutate: downloadImage, isLoading: isDownloadImgLoading } =
+      useDownloadImageMutation({
+        onError: (err): void => {
+          if (err instanceof Error) {
+            message.error(err.message);
+          }
+        },
+      });
+
     return (
       <div
         className={s.imgGrid}
@@ -43,6 +63,7 @@ const ImgCard = (props: ImgCardProps) => {
               size="large"
               onClick={(e) => {
                 e.stopPropagation();
+                likeImage(img.id || 0)
               }}
             />
           </div>
@@ -56,6 +77,7 @@ const ImgCard = (props: ImgCardProps) => {
               size="large"
               onClick={(e) => {
                 e.stopPropagation();
+                downloadImage(img.id  || 0)
               }}
             />
           </div>

@@ -20,6 +20,12 @@ export function responseHandler(
       .then(async (res) => {
         // Check whether response status is valid
         const resData = await res.json();
+        if (res.status === 401) {
+          let path = window.location.href
+          if (!path.includes("login=true")) {
+            window.location.href = window.location.href + "?login=true";
+          }
+        }
 
         if (res.status >= 400) {
           if (resData.debug_msg) {

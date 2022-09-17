@@ -1,13 +1,6 @@
 import { createRequester, BODY_TYPE } from "./utils";
 import { clientInit } from "./responseHandler";
 
-/**
- * Utility messages
- */
-export interface DqueueResponseHeader {
-  debug_msg?: string;
-}
-
 export const DEFAULT_BASE_URL = "";
 
 type Options = {
@@ -93,6 +86,21 @@ export interface Image {
   user?: User;
   url?: string;
   desc?: string;
+  likes?: number;
+  downloads?: number;
+}
+
+export interface AddDeltaImageRequest {
+  image_id?: number;
+  delta_image?: DeltaImage;
+}
+
+export interface AddDeltaImageResponse {
+  debug_msg?: string;
+  image?: Image;
+}
+
+export interface DeltaImage {
   likes?: number;
   downloads?: number;
 }
@@ -209,6 +217,20 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
         const path = "/api/image/get_all";
 
         return request<GetImagesRequest, GetImagesResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      }
+    },
+    addDeltaImage: {
+      path: "/api/image/add_delta",
+      post: (data: AddDeltaImageRequest, requestInit?: RequestInit) => {
+        const path = "/api/image/add_delta";
+
+        return request<AddDeltaImageRequest, AddDeltaImageResponse>(
           baseUrl + path,
           "post",
           data,
