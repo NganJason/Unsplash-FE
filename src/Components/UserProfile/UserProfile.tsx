@@ -6,7 +6,7 @@ import ImgGrid from "../Home/ImgGrid/ImgGrid";
 import { HiPhotograph } from "react-icons/hi";
 import { AiTwotoneLike } from "react-icons/ai"
 import { useSearchParams } from "react-router-dom";
-import { useGetUserQuery } from "../../_shared/queries/unsplash";
+import { useGetUserLikesQuery, useGetUserQuery } from "../../_shared/queries/unsplash";
 
 const { TabPane } = Tabs;
 
@@ -20,6 +20,11 @@ const UserProfile = (): JSX.Element => {
       retry: 0,
       enabled: userID !== 0
     });
+
+    const { data: userLikes, isLoading: isUserLikesLoading } = useGetUserLikesQuery(userID, {
+      refetchInterval: false,
+      enabled: userID !== 0
+    })
 
     React.useEffect(() => {
       let id = search.get("id")
@@ -59,7 +64,7 @@ const UserProfile = (): JSX.Element => {
                     key="1"
                   >
                     <div className={s.userImages}>
-                      <ImgGrid />
+                      
                     </div>
                   </TabPane>
                   <TabPane
@@ -72,7 +77,7 @@ const UserProfile = (): JSX.Element => {
                     key="2"
                   >
                     <div className={s.userImages}>
-                      <ImgGrid />
+                      
                     </div>
                   </TabPane>
                 </Tabs>

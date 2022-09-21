@@ -1,11 +1,12 @@
 import { useInfiniteQuery, useQuery, UseQueryOptions } from "react-query";
 import { unsplashRequest } from "../api";
-import { GetImagesResponse, VerifyUserRequest, VerifyUserResponse, User, GetUserResponse } from "../api/client"
+import { GetImagesResponse, VerifyUserRequest, VerifyUserResponse, User, GetUserResponse, GetUserLikesResponse, Image } from "../api/client"
 
 export enum QueryKeys {
   VERIFY_USER = "VERIFY_USER",
   GET_USER = "GET_USER",
   GET_IMAGES = "GET_IMAGES",
+  GET_USER_LIKES = "GET_USER_LIKES",
 }
 
 export const useVerifyUserQuery = (
@@ -71,3 +72,23 @@ export const useGetImagesQuery = () => {
     }
   )
 }
+
+export const useGetUserLikesQuery = (
+  userID: number,
+  options?: UseQueryOptions<Image[] | []>
+) => {
+  const fetchGetUserLikes = async (): Promise<Image[]> => {
+    const response: GetUserLikesResponse =
+      await unsplashRequest.getUserLikes.post({
+        user_id: userID,
+      });
+
+    return response.images ?? [];
+  };
+
+  return useQuery<Image[] | []>(
+    [QueryKeys.GET_USER_LIKES],
+    fetchGetUserLikes,
+    options
+  );
+};

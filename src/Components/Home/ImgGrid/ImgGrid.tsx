@@ -10,11 +10,21 @@ import ImgModal from "./ImgModal/ImgModal";
 import { useGridColumns } from "../../../_shared/hooks/imgGrid/useGridColumns";
 import { useImages } from "../../../_shared/hooks/imgGrid/useImages";
 import { useScroll } from "../../../_shared/hooks/useScroll";
+import { FetchNextPageOptions, InfiniteData, InfiniteQueryObserverResult } from "react-query";
+import { GetImagesResponse } from "../../../_shared/api/client";
 
-const ImgGrid = (): JSX.Element => {
+type ImgGridProps = {
+  data: InfiniteData<GetImagesResponse> | undefined;
+  fetchNextPage: (
+    options?: FetchNextPageOptions | undefined
+  ) => Promise<InfiniteQueryObserverResult<GetImagesResponse, unknown>>;
+};
+
+const ImgGrid = (props: ImgGridProps): JSX.Element => {
+    const { data, fetchNextPage } = props
     const [modalVisible, setModalVisible] = useState(false);
     const { columns } = useGridColumns();
-    const { imgs, fetchNextPage } = useImages(columns)
+    const { imgs } = useImages(data, columns)
     useScroll(fetchNextPage)
 
     const [currRow, setCurrRow] = useState(0);

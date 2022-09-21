@@ -90,6 +90,15 @@ export interface GetImagesResponse {
   next_cursor?: string;
 }
 
+export interface GetUserLikesRequest {
+  user_id?: number;
+}
+
+export interface GetUserLikesResponse {
+  debug_msg?: string;
+  images?: Image[];
+}
+
 export interface Image {
   id?: number;
   user?: User;
@@ -247,6 +256,20 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
           requestInit
         );
       }
+    },
+    getUserLikes: {
+      path: "/api/user/likes",
+      post: (data: GetUserLikesRequest, requestInit?: RequestInit) => {
+        const path = "/api/user/likes";
+
+        return request<GetUserLikesRequest, GetUserLikesResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      },
     },
     addDeltaImage: {
       path: "/api/image/add_delta",
