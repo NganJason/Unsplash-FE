@@ -3,7 +3,6 @@ import s from "./s.module.scss";
 
 import { Button, message } from "antd";
 import { AiFillLike, AiOutlineArrowDown } from "react-icons/ai";
-import { GoPlus } from "react-icons/go";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
 import { Image } from "../../../../_shared/api/client";
 import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";

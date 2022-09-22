@@ -7,12 +7,14 @@ import { HiPhotograph } from "react-icons/hi";
 import { AiTwotoneLike } from "react-icons/ai"
 import { useSearchParams } from "react-router-dom";
 import { useGetImagesQuery, useGetUserLikesQuery, useGetUserQuery } from "../../_shared/queries/unsplash";
+import { useUser } from "../../hooks/useUser";
 
 const { TabPane } = Tabs;
 
 const UserProfile = (): JSX.Element => {
     const [search] = useSearchParams();
     const [userID, setUserID] = React.useState<number>(0)
+    const { user: loggedInUser } = useUser()
 
     const { data: user, isLoading: isGetUserLoading } = useGetUserQuery(userID, {
       refetchOnWindowFocus: true,
@@ -29,8 +31,16 @@ const UserProfile = (): JSX.Element => {
       if (id && id !== "") {
         setUserID(Number(id));
       }
-      
     }, [search])
+
+    const onFileSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if ((event.target as HTMLInputElement).files) {
+        if (event.target.files && event.target.files.length > 0) {
+          const file = event.target.files[0];
+          // uploadImage(file);
+        }
+      }
+    };
 
     return (
       <div className={s.userProfileContainer}>
@@ -41,12 +51,17 @@ const UserProfile = (): JSX.Element => {
         ) : (
           <>
             <div className={s.userProfile}>
-              <img
-                src={
-                  user?.profile_url ||
-                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                }
-              />
+              <div className={s.profileImg}>
+                <img
+                  src={
+                    user?.profile_url ||
+                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                  }
+                />
+                {loggedInUser && loggedInUser.id === user?.id && (
+                  <input type="file" onChange={onFileSubmit} />
+                )}
+              </div>
 
               <div className={s.userInfo}>
                 <h1>{`${user?.last_name} ${user?.first_name}`}</h1>
@@ -60,31 +75,31 @@ const UserProfile = (): JSX.Element => {
               <Tabs className={s.tabs} tabBarGutter={50}>
                 <TabPane
                   tab={
+                    <span className={s.tabTitle}>
+                      <AiTwotoneLike className={s.tabIcon} />
+                      Likes
+                    </span>
+                  }
+                  key="1"
+                >
+                  <div className={s.userImages}>
+                    <ImgGrid data={data} fetchNextPage={fetchNextPage} />
+                  </div>
+                </TabPane>
+                <TabPane
+                  tab={
                     <span className={`${s.tabTitle} ${s.firstTab}`}>
                       <HiPhotograph className={s.tabIcon} />
                       Photos
                     </span>
                   }
-                  key="1"
+                  key="2"
                 >
                   <div className={s.userImages}>
                     <ImgGrid
                       data={imgPostedByUser}
                       fetchNextPage={fetchNextImgPostedByUser}
                     />
-                  </div>
-                </TabPane>
-                <TabPane
-                  tab={
-                    <span className={s.tabTitle}>
-                      <AiTwotoneLike className={s.tabIcon} />
-                      Likes
-                    </span>
-                  }
-                  key="2"
-                >
-                  <div className={s.userImages}>
-                    <ImgGrid data={data} fetchNextPage={fetchNextPage} />
                   </div>
                 </TabPane>
               </Tabs>

@@ -13,6 +13,7 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import type { MenuProps } from "antd";
 
 import SearchBar from "./Searchbar/Searchbar";
+import { toCapitalise } from "../../utils/util";
 
 const unsplashIcon =
   "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/unsplash-512.png";
@@ -88,7 +89,7 @@ const Nav = (): JSX.Element => {
                     className={s.profileImg}
                     src={user.profile_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}
                   />
-                  <p>{user.username}</p>
+                  <p>{`${toCapitalise(user.last_name || "")} ${toCapitalise(user.first_name || "")}`}</p>
                 </div>
               </Dropdown>
             ) : (
