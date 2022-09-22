@@ -49,21 +49,12 @@ const ImgCard = (props: ImgCardProps) => {
             <Button
               className={s.infoBtn}
               type="primary"
-              icon={<GoPlus />}
-              size="large"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            />
-
-            <Button
-              className={s.infoBtn}
-              type="primary"
               icon={<AiFillLike />}
               size="large"
               onClick={(e) => {
                 e.stopPropagation();
                 likeImage(img.id || 0)
+                message.success("Added to liked library!")
               }}
             />
           </div>

@@ -48,10 +48,6 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 1.6;
-    
-    p {
-        margin: auto;
-    }
 
     .hamburger {
         display: none;
@@ -63,6 +59,21 @@
 
     .link:hover, .hamburger:hover {
         color: #413F42;
+    }
+}
+
+.profile {
+    display: flex;
+
+    .profileImg {
+      width: 30px;
+      margin-right: 0.5rem;
+
+      border-radius: 50%;
+    }
+    
+    p {
+        margin: auto;
     }
 }
 

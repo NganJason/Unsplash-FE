@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "./s.module.scss";
 
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 import ImgCard from "./ImgCard/ImgCard";
@@ -18,10 +18,11 @@ type ImgGridProps = {
   fetchNextPage: (
     options?: FetchNextPageOptions | undefined
   ) => Promise<InfiniteQueryObserverResult<GetImagesResponse, unknown>>;
+  isLoading?: boolean;
 };
 
 const ImgGrid = (props: ImgGridProps): JSX.Element => {
-    const { data, fetchNextPage } = props
+    const { data, fetchNextPage, isLoading } = props
     const [modalVisible, setModalVisible] = useState(false);
     const { columns } = useGridColumns();
     const { imgs } = useImages(data, columns)
@@ -83,8 +84,8 @@ const ImgGrid = (props: ImgGridProps): JSX.Element => {
                       img={img}
                       imgUrl={img.url || ""}
                       onClick={() => {
-                        setCurrCol(col)
-                        setCurrRow(row)
+                        setCurrCol(col);
+                        setCurrRow(row);
                         setModalVisible(true);
                       }}
                     />
@@ -93,6 +94,11 @@ const ImgGrid = (props: ImgGridProps): JSX.Element => {
               </div>
             );
           })}
+          {isLoading && (
+            <div className={s.loadingSpin}>
+              <Spin size="large"/>
+            </div>
+          )}
         </div>
         <Modal
           title=""
@@ -106,7 +112,7 @@ const ImgGrid = (props: ImgGridProps): JSX.Element => {
             setModalVisible(false);
           }}
           className={s.modal}
-        > 
+        >
           <ImgModal img={imgs[currCol][currRow]} />
           <AiOutlineLeft
             className={`${s.nextBtn} ${s.left}`}

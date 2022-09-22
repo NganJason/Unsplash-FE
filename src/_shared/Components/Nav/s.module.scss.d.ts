@@ -8,3 +8,5 @@ export const navMiddle: string;
 export const navRight: string;
 export const navSearch: string;
 export const navSetting: string;
+export const profile: string;
+export const profileImg: string;

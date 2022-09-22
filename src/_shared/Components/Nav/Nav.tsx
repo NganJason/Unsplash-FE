@@ -1,6 +1,6 @@
 import React from "react"
 import s from "./s.module.scss";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../../../hooks/useAuth";
@@ -48,6 +48,7 @@ const profileMenu = (menuOnClickHandler: MenuProps["onClick"]): JSX.Element => {
 
 const Nav = (): JSX.Element => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useUser()
   const { logout } = useAuth();
 
@@ -55,6 +56,11 @@ const Nav = (): JSX.Element => {
     if (e.key === "logout") {
       logout();
       window.location.reload();
+    }
+
+    if (e.key === "profile") {
+      navigate(`/user?id=${user?.id}`)
+      window.location.reload()
     }
   };
 
@@ -77,7 +83,13 @@ const Nav = (): JSX.Element => {
                 overlay={profileMenu(menuOnClickHandler)}
                 placement="bottomRight"
               >
-                <p>{user.username}</p>
+                <div className={s.profile}>
+                  <img
+                    className={s.profileImg}
+                    src={user.profile_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}
+                  />
+                  <p>{user.username}</p>
+                </div>
               </Dropdown>
             ) : (
               <p>

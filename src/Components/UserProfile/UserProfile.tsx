@@ -41,7 +41,12 @@ const UserProfile = (): JSX.Element => {
         ) : (
           <>
             <div className={s.userProfile}>
-              <img src={user?.profile_url || ""} />
+              <img
+                src={
+                  user?.profile_url ||
+                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                }
+              />
 
               <div className={s.userInfo}>
                 <h1>{`${user?.last_name} ${user?.first_name}`}</h1>
@@ -63,7 +68,10 @@ const UserProfile = (): JSX.Element => {
                   key="1"
                 >
                   <div className={s.userImages}>
-                    <ImgGrid data={imgPostedByUser} fetchNextPage={fetchNextImgPostedByUser}/>
+                    <ImgGrid
+                      data={imgPostedByUser}
+                      fetchNextPage={fetchNextImgPostedByUser}
+                    />
                   </div>
                 </TabPane>
                 <TabPane

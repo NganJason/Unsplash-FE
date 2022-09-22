@@ -6,6 +6,7 @@ export const infoBtn: string;
 export const infoFooter: string;
 export const infoHeader: string;
 export const left: string;
+export const loadingSpin: string;
 export const modal: string;
 export const nextBtn: string;
 export const right: string;
