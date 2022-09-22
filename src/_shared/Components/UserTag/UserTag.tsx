@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User } from "../../api/client";
 import s from "./s.module.scss";
 
@@ -12,17 +12,17 @@ type UserTagProps = {
 
 const UserTag = (props: UserTagProps): JSX.Element => {
     const {textColor ="black", user} = props
+    const navigate = useNavigate();
 
+    const handleOnclick = () => {
+      navigate(`/user?id=${user?.id}`);
+      window.location.reload();
+    }
     return (
       <div className={s.userTag}>
-        <Link to={`/user?id=${user?.id}`}>
-          <img src={user?.profile_url || ""} />
-        </Link>
-
+        <img src={user?.profile_url || ""} onClick={handleOnclick}/>
         <div className={`${s.userInfo} ${s[textColor]}`}>
-          <Link to={`/user?id=${user?.id}`}>
-            <h1>{user?.username || ""}</h1>
-          </Link>
+          <h1 onClick={handleOnclick}>{user?.username || ""}</h1>
         </div>
       </div>
     );

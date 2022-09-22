@@ -49,15 +49,21 @@ export const useGetUserQuery = (
   );
 }
 
-export const useGetImagesQuery = () => {
-  const fetchImage = async ({pageParam = null}): Promise<GetImagesResponse> => {
+export const useGetImagesQuery = (
+  enabled: boolean | undefined,
+  userID?: number, 
+) => {
+  const fetchImage = async ({
+    pageParam = null,
+  }): Promise<GetImagesResponse> => {
     const response: GetImagesResponse = await unsplashRequest.getImages.post({
+      user_id: userID,
       cursor: pageParam,
-      page_size: 10
-    })
+      page_size: 10,
+    });
 
-    return response
-  }
+    return response;
+  };
 
   return useInfiniteQuery<GetImagesResponse>(
     [QueryKeys.GET_IMAGES],
@@ -65,30 +71,43 @@ export const useGetImagesQuery = () => {
     {
       getNextPageParam: (lastPage, _) => {
         if (lastPage.next_cursor === null) {
-          return undefined
+          return undefined;
         }
-        return lastPage.next_cursor
-      }
+        return lastPage.next_cursor;
+      },
+      enabled: enabled,
     }
-  )
-}
+  );
+};
 
 export const useGetUserLikesQuery = (
   userID: number,
-  options?: UseQueryOptions<Image[] | []>
+  enabled: boolean | undefined
 ) => {
-  const fetchGetUserLikes = async (): Promise<Image[]> => {
+  const fetchGetUserLikes = async ({
+    pageParam = null,
+  }): Promise<GetUserLikesResponse> => {
     const response: GetUserLikesResponse =
       await unsplashRequest.getUserLikes.post({
         user_id: userID,
+        cursor: pageParam,
+        page_size: 10,
       });
 
-    return response.images ?? [];
+    return response;
   };
 
-  return useQuery<Image[] | []>(
+  return useInfiniteQuery<GetUserLikesResponse>(
     [QueryKeys.GET_USER_LIKES],
     fetchGetUserLikes,
-    options
+    {
+      getNextPageParam: (lastPage, _) => {
+        if (lastPage.next_cursor === null) {
+          return undefined;
+        }
+        return lastPage.next_cursor;
+      },
+      enabled: enabled
+    }
   );
 };

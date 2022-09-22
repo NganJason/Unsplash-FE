@@ -80,6 +80,7 @@ export interface GetUserResponse {
 }
 
 export interface GetImagesRequest {
+  user_id?: number;
   page_size?: number;
   cursor?: string | null;
 }
@@ -92,11 +93,14 @@ export interface GetImagesResponse {
 
 export interface GetUserLikesRequest {
   user_id?: number;
+  cursor?: string | null;
+  page_size?: number;
 }
 
 export interface GetUserLikesResponse {
   debug_msg?: string;
   images?: Image[];
+  next_cursor?: string;
 }
 
 export interface Image {
@@ -227,7 +231,7 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
           BODY_TYPE.json,
           requestInit
         );
-      }
+      },
     },
     logout: {
       path: "/api/user/logout",
@@ -241,7 +245,7 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
           BODY_TYPE.json,
           requestInit
         );
-      }
+      },
     },
     getImages: {
       path: "/api/image/get_all",
@@ -255,7 +259,7 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
           BODY_TYPE.json,
           requestInit
         );
-      }
+      },
     },
     getUserLikes: {
       path: "/api/user/likes",
@@ -283,8 +287,8 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
           BODY_TYPE.json,
           requestInit
         );
-      }
-    }
+      },
+    },
   };
   return clients;
 }
