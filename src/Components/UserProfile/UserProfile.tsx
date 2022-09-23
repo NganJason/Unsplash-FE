@@ -1,14 +1,15 @@
 import React from "react";
 import s from "./s.module.scss";
 
-import { Spin, Tabs } from "antd";
+import { message, Spin, Tabs } from "antd";
 import ImgGrid from "../Home/ImgGrid/ImgGrid";
 import { HiPhotograph } from "react-icons/hi";
 import { AiTwotoneLike } from "react-icons/ai"
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetImagesQuery, useGetUserLikesQuery, useGetUserQuery } from "../../_shared/queries/unsplash";
 import { useUser } from "../../hooks/useUser";
 import { unknownImgUrl } from "../../_shared/constants/constant";
+import { useUploadProfileImg } from "../../_shared/mutations/unsplash";
 
 const { TabPane } = Tabs;
 
@@ -16,6 +17,7 @@ const UserProfile = (): JSX.Element => {
     const [search] = useSearchParams();
     const [userID, setUserID] = React.useState<number>(0)
     const { user: loggedInUser } = useUser()
+    const navigate = useNavigate();
 
     const { data: user, isLoading: isGetUserLoading } = useGetUserQuery(userID, {
       refetchOnWindowFocus: true,
@@ -31,14 +33,29 @@ const UserProfile = (): JSX.Element => {
       let id = search.get("id")
       if (id && id !== "") {
         setUserID(Number(id));
+      } else {
+        navigate("/");
       }
     }, [search])
+
+    const { mutate: uploadImage, isLoading: isUploadLoading } = useUploadProfileImg(
+      {
+        onSuccess: (): void => {
+          window.location.reload();
+        },
+        onError: (err): void => {
+          if (err instanceof Error) {
+            message.error(err.message);
+          }
+        },
+      }
+    );
 
     const onFileSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
       if ((event.target as HTMLInputElement).files) {
         if (event.target.files && event.target.files.length > 0) {
           const file = event.target.files[0];
-          // uploadImage(file);
+          uploadImage(file);
         }
       }
     };
@@ -53,10 +70,15 @@ const UserProfile = (): JSX.Element => {
           <>
             <div className={s.userProfile}>
               <div className={s.profileImg}>
-                <img
-                  src={user?.profile_url || unknownImgUrl}
-                  alt="user_profile_pic"
-                />
+                {isUploadLoading ? (
+                  <Spin />
+                ) : (
+                  <img
+                    src={user?.profile_url || unknownImgUrl}
+                    alt="user_profile_pic"
+                  />
+                )}
+
                 {loggedInUser && loggedInUser.id === user?.id && (
                   <input type="file" onChange={onFileSubmit} />
                 )}

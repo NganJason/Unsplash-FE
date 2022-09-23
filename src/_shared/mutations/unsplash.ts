@@ -8,6 +8,7 @@ import { unsplashRequest } from "../api";
 import { AddDeltaImageResponse, Image, UploadImageResponse } from "../api/client";
 
 const formKeyUploadImg = "img"
+const formKeyUploadProfileImg = "profile_img";
 
 export const useLikeImageMutation = (
     options?: UseMutationOptions<
@@ -58,6 +59,35 @@ export const useUploadImage = (
     let url: string = "/api/image/upload";
     let formData = new FormData();
     formData.append(formKeyUploadImg, file);
+
+    try {
+      let resp: UploadImageResponse = await axios.post(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
+
+      if (resp.debug_msg && resp.debug_msg !== "") {
+        throw new Error(resp.debug_msg);
+      }
+
+      return resp.image;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  return useMutation(uploadImageMutate, options);
+};
+
+export const useUploadProfileImg = (
+  options?: UseMutationOptions<Image | undefined, unknown, File, unknown>
+) => {
+  const uploadImageMutate = async (file: File): Promise<Image | undefined> => {
+    let url: string = "/api/user/profile";
+    let formData = new FormData();
+    formData.append(formKeyUploadProfileImg, file);
 
     try {
       let resp: UploadImageResponse = await axios.post(url, formData, {

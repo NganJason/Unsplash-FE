@@ -17,7 +17,6 @@ const UploadModal = (): JSX.Element => {
     const [modalVisible, setModalVisible] = React.useState(false);
     const [fileList, setFileList] = React.useState<any[]>([]);
     
-
     React.useEffect(() => {
       let isUpload = search.get("upload");
 

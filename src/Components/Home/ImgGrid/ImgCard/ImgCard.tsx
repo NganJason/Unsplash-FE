@@ -78,4 +78,4 @@ const ImgCard = (props: ImgCardProps) => {
     );
 }
 
-export default ImgCard
+export default React.memo(ImgCard);

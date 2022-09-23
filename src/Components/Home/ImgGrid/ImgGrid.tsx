@@ -81,6 +81,7 @@ const ImgGrid = (props: ImgGridProps): JSX.Element => {
                 {colImgs.map((img, row) => {
                   return (
                     <ImgCard
+                      key={img.id}
                       img={img}
                       imgUrl={img.url || ""}
                       onClick={() => {
