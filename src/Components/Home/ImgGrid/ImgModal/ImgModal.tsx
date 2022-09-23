@@ -32,9 +32,9 @@ const ImgModal = (props: ImgModalProps): JSX.Element => {
   const { mutate: downloadImage, isLoading: isDownloadImgLoading } =
     useDownloadImageMutation({
       onError: (err): void => {
-        if (err instanceof Error) {
-          message.error(err.message);
-        }
+        // if (err instanceof Error) {
+        //   message.error(err.message);
+        // }
       },
     });
 

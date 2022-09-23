@@ -21,9 +21,9 @@ const ImgCard = (props: ImgCardProps) => {
     const { mutate: likeImage, isLoading: isLikeImageLoading } =
       useLikeImageMutation({
         onError: (err): void => {
-          if (err instanceof Error) {
-            message.error(err.message);
-          }
+          // if (err instanceof Error) {
+          //   message.error(err.message);
+          // }
         },
         onSuccess: () => {
           message.success("Added to liked library!");
@@ -33,9 +33,9 @@ const ImgCard = (props: ImgCardProps) => {
     const { mutate: downloadImage, isLoading: isDownloadImgLoading } =
       useDownloadImageMutation({
         onError: (err): void => {
-          if (err instanceof Error) {
-            message.error(err.message);
-          }
+          // if (err instanceof Error) {
+          //   message.error(err.message);
+          // }
         },
       });
 
