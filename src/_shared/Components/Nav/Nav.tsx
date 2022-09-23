@@ -7,13 +7,14 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useUser } from "../../../hooks/useUser";
 
 import { MenuOutlined } from "@ant-design/icons";
-import { Dropdown, Menu } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 import { CgProfile } from "react-icons/cg";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import type { MenuProps } from "antd";
-
 import SearchBar from "./Searchbar/Searchbar";
+
 import { toCapitalise } from "../../utils/util";
+import { unknownImgUrl } from "../../constants/constant";
 
 const unsplashIcon =
   "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/unsplash-512.png";
@@ -65,6 +66,14 @@ const Nav = (): JSX.Element => {
     }
   };
 
+    const onUploadPhoto = () => {
+      if (!user) {
+        navigate("?login=true")
+      } else {
+        navigate("?upload=true")
+      }
+    }
+
     return (
       <div className={s.nav}>
         <div className={s.navBrand}>
@@ -79,6 +88,7 @@ const Nav = (): JSX.Element => {
 
         <div className={s.navRight}>
           <div className={s.navSetting}>
+            <Button onClick={onUploadPhoto}>Upload photo</Button>
             {user ? (
               <Dropdown
                 overlay={profileMenu(menuOnClickHandler)}
@@ -87,9 +97,17 @@ const Nav = (): JSX.Element => {
                 <div className={s.profile}>
                   <img
                     className={s.profileImg}
-                    src={user.profile_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}
+                    src={
+                      user.profile_url ||
+                      unknownImgUrl
+                    }
+                    alt="user_profile_pic"
                   />
-                  <p>{`${toCapitalise(user.last_name || "")} ${toCapitalise(user.first_name || "")}`}</p>
+                  <p>
+                    {`${toCapitalise(user.last_name || "")} ${toCapitalise(
+                      user.first_name || ""
+                    )}`}
+                  </p>
                 </div>
               </Dropdown>
             ) : (
@@ -104,7 +122,6 @@ const Nav = (): JSX.Element => {
               </p>
             )}
           </div>
-
           <MenuOutlined className={s.hamburger} />
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { User } from "../../api/client";
+import { unknownImgUrl } from "../../constants/constant";
 import s from "./s.module.scss";
 
 declare const textColorTypes: ["white", "black"]
@@ -20,7 +21,11 @@ const UserTag = (props: UserTagProps): JSX.Element => {
     }
     return (
       <div className={s.userTag}>
-        <img src={user?.profile_url || ""} onClick={handleOnclick}/>
+        <img
+          src={user?.profile_url || unknownImgUrl}
+          alt="user_profile_pic"
+          onClick={handleOnclick}
+        />
         <div className={`${s.userInfo} ${s[textColor]}`}>
           <h1 onClick={handleOnclick}>{user?.username || ""}</h1>
         </div>

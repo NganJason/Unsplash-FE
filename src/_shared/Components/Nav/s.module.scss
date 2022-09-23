@@ -49,6 +49,19 @@
     font-weight: 500;
     line-height: 1.6;
 
+    .navSetting {
+        display: flex;
+        align-items: center;
+
+        p {
+            margin: auto;
+        }
+
+        button {
+            margin-right: 0.7rem;
+        }
+    }
+
     .hamburger {
         display: none;
     }
@@ -67,7 +80,7 @@
 
     .profileImg {
       width: 30px;
-      margin-right: 0.5rem;
+      margin: 0 0.7rem;
 
       border-radius: 50%;
     }

@@ -5,6 +5,7 @@ import './App.css';
 import Home from './Components/Home/Home';
 import LoginModal from './Components/LoginModal/LoginModal';
 import Signup from './Components/Signup/Signup';
+import UploadModal from './Components/UploadModal/UploadModal';
 import UserProfile from './Components/UserProfile/UserProfile';
 
 import Nav from './_shared/Components/Nav/Nav';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/user" element={withNav(<UserProfile />)} />
       </Routes>
       <LoginModal />
+      <UploadModal />
     </div>
   );
 }

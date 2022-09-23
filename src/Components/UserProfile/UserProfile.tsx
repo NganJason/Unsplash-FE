@@ -8,6 +8,7 @@ import { AiTwotoneLike } from "react-icons/ai"
 import { useSearchParams } from "react-router-dom";
 import { useGetImagesQuery, useGetUserLikesQuery, useGetUserQuery } from "../../_shared/queries/unsplash";
 import { useUser } from "../../hooks/useUser";
+import { unknownImgUrl } from "../../_shared/constants/constant";
 
 const { TabPane } = Tabs;
 
@@ -53,10 +54,8 @@ const UserProfile = (): JSX.Element => {
             <div className={s.userProfile}>
               <div className={s.profileImg}>
                 <img
-                  src={
-                    user?.profile_url ||
-                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                  }
+                  src={user?.profile_url || unknownImgUrl}
+                  alt="user_profile_pic"
                 />
                 {loggedInUser && loggedInUser.id === user?.id && (
                   <input type="file" onChange={onFileSubmit} />

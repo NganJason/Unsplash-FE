@@ -127,6 +127,15 @@ export interface DeltaImage {
   downloads?: number;
 }
 
+export interface UploadImageRequest {
+  desc?: string;
+}
+
+export interface UploadImageResponse {
+  debug_msg?: string;
+  image?: Image;
+}
+
 export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
   const _request = createRequester({
     request: opts?.fetch,
@@ -281,6 +290,20 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
         const path = "/api/image/add_delta";
 
         return request<AddDeltaImageRequest, AddDeltaImageResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      },
+    },
+    uploadImage: {
+      path: "/api/image/upload",
+      post: (data: UploadImageRequest, requestInit?: RequestInit) => {
+        const path = "/api/image/upload";
+
+        return request<UploadImageRequest, UploadImageResponse>(
           baseUrl + path,
           "post",
           data,
