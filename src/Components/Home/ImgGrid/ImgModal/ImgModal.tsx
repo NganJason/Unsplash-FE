@@ -4,7 +4,6 @@ import s from "./s.module.scss";
 import { Button, Image, message } from "antd";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
 import { AiFillLike } from "react-icons/ai";
-import { GoPlus } from "react-icons/go";
 import { FaShare } from "react-icons/fa"
 import { Image as ImageType } from "../../../../_shared/api/client";
 import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
@@ -76,7 +75,12 @@ const ImgModal = (props: ImgModalProps): JSX.Element => {
             <h2>{img.downloads}</h2>
           </div>
         </div>
-        <Button>
+        <Button
+          onClick={() => {
+            navigator.clipboard.writeText(img.url || "");
+            message.success("Copied to clipboard!");
+          }}
+        >
           <FaShare className={s.icon} />
           Share
         </Button>

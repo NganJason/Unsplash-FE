@@ -3,6 +3,7 @@ import s from "./s.module.scss";
 
 import { Button, message } from "antd";
 import { AiFillLike, AiOutlineArrowDown } from "react-icons/ai";
+import { FaShare } from "react-icons/fa";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
 import { Image } from "../../../../_shared/api/client";
 import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
@@ -54,6 +55,18 @@ const ImgCard = (props: ImgCardProps) => {
               onClick={(e) => {
                 e.stopPropagation();
                 likeImage(img.id || 0);
+              }}
+            />
+
+            <Button
+              className={s.infoBtn}
+              type="primary"
+              icon={<FaShare />}
+              size="large"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigator.clipboard.writeText(img.url || "");
+                message.success("Copied to clipboard!");
               }}
             />
           </div>
