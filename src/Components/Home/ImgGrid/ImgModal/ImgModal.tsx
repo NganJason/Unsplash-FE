@@ -8,6 +8,7 @@ import { GoPlus } from "react-icons/go";
 import { FaShare } from "react-icons/fa"
 import { Image as ImageType } from "../../../../_shared/api/client";
 import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
+import { toImgDownloadLink } from "../../../../_shared/utils/util";
 
 type ImgModalProps = {
   img: ImageType;
@@ -22,6 +23,9 @@ const ImgModal = (props: ImgModalProps): JSX.Element => {
         if (err instanceof Error) {
           message.error(err.message);
         }
+      },
+      onSuccess: () => {
+        message.success("Added to liked library!");
       },
     });
 
@@ -46,15 +50,16 @@ const ImgModal = (props: ImgModalProps): JSX.Element => {
               likeImage(img.id || 0);
             }}
           />
-          <Button icon={<GoPlus />} size="large" />
-          <Button
-            className={s.downloadBtn}
-            onClick={() => {
-              downloadImage(img.id || 0);
-            }}
-          >
-            Download free
-          </Button>
+          <a href={toImgDownloadLink(img.url || "")}>
+            <Button
+              className={s.downloadBtn}
+              onClick={() => {
+                downloadImage(img.id || 0);
+              }}
+            >
+              Download free
+            </Button>
+          </a>
         </div>
       </div>
       <div className={s.modalContent}>

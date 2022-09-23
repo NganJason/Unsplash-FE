@@ -6,6 +6,7 @@ import { AiFillLike, AiOutlineArrowDown } from "react-icons/ai";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
 import { Image } from "../../../../_shared/api/client";
 import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
+import { toImgDownloadLink } from "../../../../_shared/utils/util";
 
 
 type ImgCardProps = {
@@ -24,6 +25,9 @@ const ImgCard = (props: ImgCardProps) => {
             message.error(err.message);
           }
         },
+        onSuccess: () => {
+          message.success("Added to liked library!");
+        }
       });
 
     const { mutate: downloadImage, isLoading: isDownloadImgLoading } =
@@ -36,10 +40,7 @@ const ImgCard = (props: ImgCardProps) => {
       });
 
     return (
-      <div
-        className={s.imgGrid}
-        onClick={onClick}
-      >
+      <div className={s.imgGrid} onClick={onClick}>
         <img src={imgUrl} alt="card_img" />
         <div className={s.imgShadow}></div>
 
@@ -52,24 +53,25 @@ const ImgCard = (props: ImgCardProps) => {
               size="large"
               onClick={(e) => {
                 e.stopPropagation();
-                likeImage(img.id || 0)
-                message.success("Added to liked library!")
+                likeImage(img.id || 0);
               }}
             />
           </div>
 
           <div className={s.infoFooter}>
             <UserTag user={img.user} textColor="white" />
-            <Button
-              className={s.infoBtn}
-              type="primary"
-              icon={<AiOutlineArrowDown />}
-              size="large"
-              onClick={(e) => {
-                e.stopPropagation();
-                downloadImage(img.id  || 0)
-              }}
-            />
+            <a href={toImgDownloadLink(img.url || "")}>
+              <Button
+                className={s.infoBtn}
+                type="primary"
+                icon={<AiOutlineArrowDown />}
+                size="large"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  downloadImage(img.id || 0);
+                }}
+              />
+            </a>
           </div>
         </div>
       </div>
