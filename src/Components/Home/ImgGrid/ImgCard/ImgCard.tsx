@@ -1,26 +1,46 @@
 import React from "react";
 import s from "./s.module.scss";
 
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { AiFillLike, AiOutlineArrowDown } from "react-icons/ai";
-import { GoPlus } from "react-icons/go";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
+import { Image } from "../../../../_shared/api/client";
+import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
+import { toImgDownloadLink } from "../../../../_shared/utils/util";
 
-const rabbidImg =
-  "https://i.pinimg.com/280x280_RS/e3/6c/c3/e36cc3cc4da34e439c87c0b9d513dca2.jpg";
 
 type ImgCardProps = {
+    img: Image;
     imgUrl: string;
     onClick: () => void;
 }
 
 const ImgCard = (props: ImgCardProps) => {
-    const { imgUrl, onClick } = props
+    const { img, imgUrl, onClick } = props
+
+    const { mutate: likeImage, isLoading: isLikeImageLoading } =
+      useLikeImageMutation({
+        onError: (err): void => {
+          if (err instanceof Error) {
+            message.error(err.message);
+          }
+        },
+        onSuccess: () => {
+          message.success("Added to liked library!");
+        }
+      });
+
+    const { mutate: downloadImage, isLoading: isDownloadImgLoading } =
+      useDownloadImageMutation({
+        onError: (err): void => {
+          if (err instanceof Error) {
+            message.error(err.message);
+          }
+        },
+      });
+
     return (
-      <div
-        className={s.imgGrid}
-        onClick={onClick}
-      >
+      <div className={s.imgGrid} onClick={onClick}>
         <img src={imgUrl} alt="card_img" />
         <div className={s.imgShadow}></div>
 
@@ -29,39 +49,33 @@ const ImgCard = (props: ImgCardProps) => {
             <Button
               className={s.infoBtn}
               type="primary"
-              icon={<GoPlus />}
-              size="large"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            />
-
-            <Button
-              className={s.infoBtn}
-              type="primary"
               icon={<AiFillLike />}
               size="large"
               onClick={(e) => {
                 e.stopPropagation();
+                likeImage(img.id || 0);
               }}
             />
           </div>
 
           <div className={s.infoFooter}>
-            <UserTag textColor="white" />
-            <Button
-              className={s.infoBtn}
-              type="primary"
-              icon={<AiOutlineArrowDown />}
-              size="large"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            />
+            <UserTag user={img.user} textColor="white" />
+            <a href={toImgDownloadLink(img.url || "")}>
+              <Button
+                className={s.infoBtn}
+                type="primary"
+                icon={<AiOutlineArrowDown />}
+                size="large"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  downloadImage(img.id || 0);
+                }}
+              />
+            </a>
           </div>
         </div>
       </div>
     );
 }
 
-export default ImgCard
+export default React.memo(ImgCard);

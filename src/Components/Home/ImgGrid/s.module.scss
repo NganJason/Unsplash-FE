@@ -169,6 +169,15 @@
     }
 }
 
+.loadingSpin {
+    min-height: 100px;
+    min-width: 100vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media only screen and (max-width: 800px) {
   .nextBtn {
     display: none;

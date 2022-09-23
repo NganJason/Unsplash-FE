@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { InfiniteData } from "react-query";
 import { GetImagesResponse, Image } from "../../api/client";
-import { useGetImagesQuery } from "../../queries/unsplash";
 
-export const useImages = (columns: number) => {
+export const useImages = (
+  data: InfiniteData<GetImagesResponse> | undefined,
+  columns: number
+) => {
   const [imgs, setImgs] = useState<Array<Image[]>>([[]]);
-  const { data, fetchNextPage } = useGetImagesQuery();
 
   useEffect(() => {
     let parsedImgs: Image[] = parseServerImgs(data);
@@ -14,7 +15,7 @@ export const useImages = (columns: number) => {
     setImgs(images);
   }, [columns, data]);
 
-  return { imgs, fetchNextPage };
+  return { imgs };
 };
 
 const parseServerImgs = (

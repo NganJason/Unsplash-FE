@@ -1,4 +1,6 @@
 export const firstTab: string;
+export const loadingSpin: string;
+export const profileImg: string;
 export const tabIcon: string;
 export const tabs: string;
 export const tabTitle: string;

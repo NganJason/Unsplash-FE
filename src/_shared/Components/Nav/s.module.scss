@@ -48,9 +48,22 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 1.6;
-    
-    p {
-        margin: auto;
+
+    .navSetting {
+        display: flex;
+        align-items: center;
+
+        p {
+            margin: auto;
+        }
+
+        img {
+            object-fit: cover;
+        }
+
+        button {
+            margin-right: 0.7rem;
+        }
     }
 
     .hamburger {
@@ -63,6 +76,21 @@
 
     .link:hover, .hamburger:hover {
         color: #413F42;
+    }
+}
+
+.profile {
+    display: flex;
+
+    .profileImg {
+      width: 30px;
+      margin: 0 0.7rem;
+
+      border-radius: 50%;
+    }
+    
+    p {
+        margin: auto;
     }
 }
 
@@ -91,7 +119,7 @@
 
 @media only screen and (max-width: 800px) {
     .navSetting {
-        display: none;
+        display: none !important;
     }
 
     .hamburger {

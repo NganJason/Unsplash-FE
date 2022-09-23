@@ -1,53 +1,81 @@
 import React from "react"
 import s from "./s.module.scss";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../../../hooks/useAuth";
 import { useUser } from "../../../hooks/useUser";
 
 import { MenuOutlined } from "@ant-design/icons";
-import { Dropdown, Menu } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 import { CgProfile } from "react-icons/cg";
+import { AiOutlineLogin, AiOutlineCloudUpload } from "react-icons/ai";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import type { MenuProps } from "antd";
-
 import SearchBar from "./Searchbar/Searchbar";
+
+import { toCapitalise } from "../../utils/util";
+import { unknownImgUrl } from "../../constants/constant";
 
 const unsplashIcon =
   "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/unsplash-512.png";
 
-const profileMenu = (menuOnClickHandler: MenuProps["onClick"]): JSX.Element => {
+const profileMenu = (menuOnClickHandler: MenuProps["onClick"], isLoggedIn: boolean): JSX.Element => {
+  let items = [
+    {
+      key: "upload",
+      label: (
+        <div className={s.dropdownItem}>
+          <AiOutlineCloudUpload />
+          <p>Upload Photo</p>
+        </div>
+      ),
+    },
+    {
+      key: "logout",
+      label: (
+        <div className={`${s.dropdownItem} ${s.dropdownItemLast}`}>
+          <RiLogoutBoxRLine />
+          <p>Logout</p>
+        </div>
+      ),
+    },
+  ];
+
+  if (isLoggedIn) {
+    items.unshift({
+      key: "profile",
+      label: (
+        <div className={s.dropdownItem}>
+          <CgProfile />
+          <p>Profile</p>
+        </div>
+      ),
+    });
+  } else {
+    items.unshift({
+      key: "signup",
+      label: (
+        <div className={s.dropdownItem}>
+          <AiOutlineLogin />
+          <p>Signup</p>
+        </div>
+      ),
+    });
+  }
+
   return (
     <Menu
       style={{ minWidth: "150px" }}
       onClick={menuOnClickHandler}
-      items={[
-        {
-          key: "profile",
-          label: (
-            <div className={s.dropdownItem}>
-              <CgProfile />
-              <p>Profile</p>
-            </div>
-          ),
-        },
-        {
-          key: "logout",
-          label: (
-            <div className={`${s.dropdownItem} ${s.dropdownItemLast}`}>
-              <RiLogoutBoxRLine />
-              <p>Logout</p>
-            </div>
-          ),
-        },
-      ]}
+      items={items}
     />
   );
 };
 
 const Nav = (): JSX.Element => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useUser()
   const { logout } = useAuth();
 
@@ -56,7 +84,35 @@ const Nav = (): JSX.Element => {
       logout();
       window.location.reload();
     }
+
+    if (e.key === "profile") {
+      navigate(`/user?id=${user?.id}`)
+      window.location.reload()
+    }
+
+    if (e.key === "signup") {
+      navigate("/signup")
+      window.location.reload()
+    }
+
+    if (e.key === "upload") {
+      if (user) {
+        navigate(`${window.location.pathname}?upload=true`);
+      } else {
+        navigate(`${window.location.pathname}?login=true`);
+      }
+
+      window.location.reload();
+    }
   };
+
+    const onUploadPhoto = () => {
+      if (!user) {
+        navigate("?login=true")
+      } else {
+        navigate("?upload=true")
+      }
+    }
 
     return (
       <div className={s.nav}>
@@ -72,12 +128,24 @@ const Nav = (): JSX.Element => {
 
         <div className={s.navRight}>
           <div className={s.navSetting}>
+            <Button onClick={onUploadPhoto}>Upload photo</Button>
             {user ? (
               <Dropdown
-                overlay={profileMenu(menuOnClickHandler)}
+                overlay={profileMenu(menuOnClickHandler, user !== null)}
                 placement="bottomRight"
               >
-                <p>{user.username}</p>
+                <div className={s.profile}>
+                  <img
+                    className={s.profileImg}
+                    src={user.profile_url || unknownImgUrl}
+                    alt="user_profile_pic"
+                  />
+                  <p>
+                    {`${toCapitalise(user.last_name || "")} ${toCapitalise(
+                      user.first_name || ""
+                    )}`}
+                  </p>
+                </div>
               </Dropdown>
             ) : (
               <p>
@@ -91,8 +159,12 @@ const Nav = (): JSX.Element => {
               </p>
             )}
           </div>
-
-          <MenuOutlined className={s.hamburger} />
+          <Dropdown
+            overlay={profileMenu(menuOnClickHandler, user !== undefined)}
+            placement="bottomRight"
+          >
+            <MenuOutlined className={s.hamburger} />
+          </Dropdown>
         </div>
       </div>
     );

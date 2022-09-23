@@ -5,10 +5,10 @@ import './App.css';
 import Home from './Components/Home/Home';
 import LoginModal from './Components/LoginModal/LoginModal';
 import Signup from './Components/Signup/Signup';
+import UploadModal from './Components/UploadModal/UploadModal';
 import UserProfile from './Components/UserProfile/UserProfile';
 
 import Nav from './_shared/Components/Nav/Nav';
-import { useUser } from './hooks/useUser';
 
 const withNav = (component: JSX.Element): JSX.Element => {
   return (
@@ -26,9 +26,10 @@ function App() {
         <Route path="/login" element={withNav(<Home />)} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/profile" element={withNav(<UserProfile />)} />
+        <Route path="/user" element={withNav(<UserProfile />)} />
       </Routes>
       <LoginModal />
+      <UploadModal />
     </div>
   );
 }

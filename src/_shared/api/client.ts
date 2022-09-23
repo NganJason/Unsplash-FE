@@ -1,13 +1,6 @@
 import { createRequester, BODY_TYPE } from "./utils";
 import { clientInit } from "./responseHandler";
 
-/**
- * Utility messages
- */
-export interface DqueueResponseHeader {
-  debug_msg?: string;
-}
-
 export const DEFAULT_BASE_URL = "";
 
 type Options = {
@@ -48,9 +41,9 @@ export interface LogoutResponse {
   debug_msg?: string;
 }
 
-export interface GetUserRequest {};
+export interface VerifyUserRequest {};
 
-export interface GetUserResponse {
+export interface VerifyUserResponse {
   debug_msg?: string;
   user: User | null;
 };
@@ -61,6 +54,7 @@ export interface User {
   email_address?: string;
   first_name?: string;
   last_name?: string;
+  profile_url?: string;
 };
 
 export interface CreateUserRequest {
@@ -76,12 +70,34 @@ export interface CreateUserResponse {
   user: User | null;
 }
 
+export interface GetUserRequest {
+  user_id?: number;
+}
+
+export interface GetUserResponse {
+  debug_msg?: string;
+  user: User | null;
+}
+
 export interface GetImagesRequest {
+  user_id?: number;
   page_size?: number;
   cursor?: string | null;
 }
 
 export interface GetImagesResponse {
+  debug_msg?: string;
+  images?: Image[];
+  next_cursor?: string;
+}
+
+export interface GetUserLikesRequest {
+  user_id?: number;
+  cursor?: string | null;
+  page_size?: number;
+}
+
+export interface GetUserLikesResponse {
   debug_msg?: string;
   images?: Image[];
   next_cursor?: string;
@@ -94,6 +110,30 @@ export interface Image {
   desc?: string;
   likes?: number;
   downloads?: number;
+}
+
+export interface AddDeltaImageRequest {
+  image_id?: number;
+  delta_image?: DeltaImage;
+}
+
+export interface AddDeltaImageResponse {
+  debug_msg?: string;
+  image?: Image;
+}
+
+export interface DeltaImage {
+  likes?: number;
+  downloads?: number;
+}
+
+export interface UploadImageRequest {
+  desc?: string;
+}
+
+export interface UploadImageResponse {
+  debug_msg?: string;
+  image?: Image;
 }
 
 export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
@@ -160,12 +200,12 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
         );
       },
     },
-    getUser: {
-      path: "/api/user/get",
-      post: (data: GetUserRequest, requestInit?: RequestInit) => {
-        const path = "/api/user/get";
+    verifyUser: {
+      path: "/api/user/verify",
+      post: (data: VerifyUserRequest, requestInit?: RequestInit) => {
+        const path = "/api/user/verify";
 
-        return request<GetUserRequest, GetUserResponse>(
+        return request<VerifyUserRequest, VerifyUserResponse>(
           baseUrl + path,
           "post",
           data,
@@ -188,6 +228,20 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
         );
       },
     },
+    getUser: {
+      path: "/api/user/get",
+      post: (data: GetUserRequest, requestInit?: RequestInit) => {
+        const path = "/api/user/get";
+
+        return request<GetUserRequest, GetUserResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      },
+    },
     logout: {
       path: "/api/user/logout",
       post: (data: LogoutRequest, requestInit?: RequestInit) => {
@@ -200,7 +254,7 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
           BODY_TYPE.json,
           requestInit
         );
-      }
+      },
     },
     getImages: {
       path: "/api/image/get_all",
@@ -214,8 +268,50 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
           BODY_TYPE.json,
           requestInit
         );
-      }
-    }
+      },
+    },
+    getUserLikes: {
+      path: "/api/user/likes",
+      post: (data: GetUserLikesRequest, requestInit?: RequestInit) => {
+        const path = "/api/user/likes";
+
+        return request<GetUserLikesRequest, GetUserLikesResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      },
+    },
+    addDeltaImage: {
+      path: "/api/image/add_delta",
+      post: (data: AddDeltaImageRequest, requestInit?: RequestInit) => {
+        const path = "/api/image/add_delta";
+
+        return request<AddDeltaImageRequest, AddDeltaImageResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      },
+    },
+    uploadImage: {
+      path: "/api/image/upload",
+      post: (data: UploadImageRequest, requestInit?: RequestInit) => {
+        const path = "/api/image/upload";
+
+        return request<UploadImageRequest, UploadImageResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      },
+    },
   };
   return clients;
 }

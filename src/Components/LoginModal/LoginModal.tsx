@@ -26,14 +26,13 @@ const LoginModal = (): JSX.Element => {
       }
     },[search])
 
-    const loginHandler = () => {
-      login(
+    const loginHandler = async () => {
+      await login(
         form.getFieldValue(EMAIL),
         form.getFieldValue(PASSWORD)
       )
 
       navigate(location.pathname);
-      window.location.reload();
     }
 
     return (
