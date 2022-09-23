@@ -115,7 +115,7 @@
 
 @media only screen and (max-width: 800px) {
     .navSetting {
-        display: none;
+        display: none !important;
     }
 
     .hamburger {

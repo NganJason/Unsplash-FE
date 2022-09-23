@@ -9,6 +9,7 @@ import { useUser } from "../../../hooks/useUser";
 import { MenuOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu } from "antd";
 import { CgProfile } from "react-icons/cg";
+import { AiOutlineLogin, AiOutlineCloudUpload } from "react-icons/ai";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import type { MenuProps } from "antd";
 import SearchBar from "./Searchbar/Searchbar";
@@ -19,31 +20,55 @@ import { unknownImgUrl } from "../../constants/constant";
 const unsplashIcon =
   "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/unsplash-512.png";
 
-const profileMenu = (menuOnClickHandler: MenuProps["onClick"]): JSX.Element => {
+const profileMenu = (menuOnClickHandler: MenuProps["onClick"], isLoggedIn: boolean): JSX.Element => {
+  let items = [
+    {
+      key: "upload",
+      label: (
+        <div className={s.dropdownItem}>
+          <AiOutlineCloudUpload />
+          <p>Upload Photo</p>
+        </div>
+      ),
+    },
+    {
+      key: "logout",
+      label: (
+        <div className={`${s.dropdownItem} ${s.dropdownItemLast}`}>
+          <RiLogoutBoxRLine />
+          <p>Logout</p>
+        </div>
+      ),
+    },
+  ];
+
+  if (isLoggedIn) {
+    items.unshift({
+      key: "profile",
+      label: (
+        <div className={s.dropdownItem}>
+          <CgProfile />
+          <p>Profile</p>
+        </div>
+      ),
+    });
+  } else {
+    items.unshift({
+      key: "signup",
+      label: (
+        <div className={s.dropdownItem}>
+          <AiOutlineLogin />
+          <p>Signup</p>
+        </div>
+      ),
+    });
+  }
+
   return (
     <Menu
       style={{ minWidth: "150px" }}
       onClick={menuOnClickHandler}
-      items={[
-        {
-          key: "profile",
-          label: (
-            <div className={s.dropdownItem}>
-              <CgProfile />
-              <p>Profile</p>
-            </div>
-          ),
-        },
-        {
-          key: "logout",
-          label: (
-            <div className={`${s.dropdownItem} ${s.dropdownItemLast}`}>
-              <RiLogoutBoxRLine />
-              <p>Logout</p>
-            </div>
-          ),
-        },
-      ]}
+      items={items}
     />
   );
 };
@@ -63,6 +88,21 @@ const Nav = (): JSX.Element => {
     if (e.key === "profile") {
       navigate(`/user?id=${user?.id}`)
       window.location.reload()
+    }
+
+    if (e.key === "signup") {
+      navigate("/signup")
+      window.location.reload()
+    }
+
+    if (e.key === "upload") {
+      if (user) {
+        navigate(`${window.location.pathname}?upload=true`);
+      } else {
+        navigate(`${window.location.pathname}?login=true`);
+      }
+
+      window.location.reload();
     }
   };
 
@@ -91,16 +131,13 @@ const Nav = (): JSX.Element => {
             <Button onClick={onUploadPhoto}>Upload photo</Button>
             {user ? (
               <Dropdown
-                overlay={profileMenu(menuOnClickHandler)}
+                overlay={profileMenu(menuOnClickHandler, user !== null)}
                 placement="bottomRight"
               >
                 <div className={s.profile}>
                   <img
                     className={s.profileImg}
-                    src={
-                      user.profile_url ||
-                      unknownImgUrl
-                    }
+                    src={user.profile_url || unknownImgUrl}
                     alt="user_profile_pic"
                   />
                   <p>
@@ -122,7 +159,12 @@ const Nav = (): JSX.Element => {
               </p>
             )}
           </div>
-          <MenuOutlined className={s.hamburger} />
+          <Dropdown
+            overlay={profileMenu(menuOnClickHandler, user !== undefined)}
+            placement="bottomRight"
+          >
+            <MenuOutlined className={s.hamburger} />
+          </Dropdown>
         </div>
       </div>
     );
