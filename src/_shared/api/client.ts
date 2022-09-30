@@ -55,6 +55,7 @@ export interface User {
   first_name?: string;
   last_name?: string;
   profile_url?: string;
+  token?: string;
 };
 
 export interface CreateUserRequest {

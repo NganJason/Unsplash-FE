@@ -1,11 +1,46 @@
-span.searchBar {
-    ::placeholder {            
-        color: #767676;
-        font-size: 14px;
-    }
-
-    max-width: 800px;
+.autocomplete {
     height: 35px;
-    
+    width: 100%;
+    max-width: 800px;
+
+    position: relative;
+}
+
+.searchBarContainer {
+    height: auto;
+    width: 100%;
+
+    position: relative;
+}
+
+.searchBar {
+    width: 100%;
+    max-width: 800px;
+
+    display: flex;
+    align-items: center;    
+
     border: none;
+}
+
+input::placeholder {            
+    color: #767676;
+    font-size: 15px;
+}
+
+.searchBarIcon {
+    position: absolute;
+    z-index: 10;
+    top: 25%;
+    right: 2%;
+}
+
+.searchIcon {
+    cursor: pointer;
+    color:#7F8487;
+}
+
+.searchIcon:hover {
+    color: #413F42;
+    transform: scale(1.01);
 }

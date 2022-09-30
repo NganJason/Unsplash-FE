@@ -96,31 +96,32 @@ const UserProfile = (): JSX.Element => {
               <Tabs className={s.tabs} tabBarGutter={50}>
                 <TabPane
                   tab={
-                    <span className={s.tabTitle}>
-                      <AiTwotoneLike className={s.tabIcon} />
-                      Likes
-                    </span>
-                  }
-                  key="1"
-                >
-                  <div className={s.userImages}>
-                    <ImgGrid data={data} fetchNextPage={fetchNextPage} />
-                  </div>
-                </TabPane>
-                <TabPane
-                  tab={
                     <span className={`${s.tabTitle} ${s.firstTab}`}>
                       <HiPhotograph className={s.tabIcon} />
                       Photos
                     </span>
                   }
-                  key="2"
+                  key="1"
                 >
                   <div className={s.userImages}>
                     <ImgGrid
                       data={imgPostedByUser}
                       fetchNextPage={fetchNextImgPostedByUser}
                     />
+                  </div>
+                </TabPane>
+
+                <TabPane
+                  tab={
+                    <span className={s.tabTitle}>
+                      <AiTwotoneLike className={s.tabIcon} />
+                      Likes
+                    </span>
+                  }
+                  key="2"
+                >
+                  <div className={s.userImages}>
+                    <ImgGrid data={data} fetchNextPage={fetchNextPage} />
                   </div>
                 </TabPane>
               </Tabs>
