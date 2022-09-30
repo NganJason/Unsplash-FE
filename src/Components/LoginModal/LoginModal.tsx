@@ -32,7 +32,12 @@ const LoginModal = (): JSX.Element => {
         form.getFieldValue(PASSWORD)
       )
 
-      navigate(location.pathname);
+      if (location.pathname === "/signup") {
+        navigate("/")
+      } else {
+        navigate(location.pathname);
+      }
+      window.location.reload()
     }
 
     return (

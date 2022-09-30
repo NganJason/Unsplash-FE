@@ -1,11 +1,13 @@
 import React from "react";
 import s from "./s.module.scss";
 
-import { Input, AutoComplete, Spin } from "antd";
+import { Input, AutoComplete, Spin, message } from "antd";
 import { BsSearch } from "react-icons/bs";
 import lodash from "lodash";
-import axios from "axios";
 import { User } from "../../../api/client";
+import { unsplashRequest } from "../../../api";
+import { useGetUserQuery } from "../../../queries/unsplash";
+import { useNavigate } from "react-router-dom";
 
 type SearchBarProps = {
   className?: string;
@@ -25,35 +27,45 @@ const SearchBar = (props: SearchBarProps): JSX.Element => {
 
   const [value, setValue] = React.useState<string>("");
   const [dropdownVisible, setDropdownVisible] = React.useState<boolean>(false)
+  const [isSubmit, setIsSubmit] = React.useState<boolean>(false)
+  const navigate = useNavigate();
 
-  async function searchUsers(keyword: string) {
-    let url: string = "/api/user/search";
-
-    try {
-      let resp = await axios.post(
-        url,
-        {
-          keyword: keyword,
-        },
-        { withCredentials: true }
-      );
-
-      return handleResp(resp);
-    } catch (err) {
-      throw err;
+  const { data: user, isLoading: isGetUserLoading } = useGetUserQuery(
+    undefined,
+    value,
+    {
+      refetchOnWindowFocus: false,
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+      retry: false,
+      enabled: isSubmit,
+      onSuccess: (user) => {
+        if (user) {
+          if (isSubmit) {
+            setIsSubmit(false);
+            navigate(`/user?id=${user.id}`);
+            window.location.reload();
+          }
+          
+        } else {
+          setIsSubmit(false)
+          message.destroy("user_not_found");
+          message.error({ content: "user not found", key: "user_not_found" });
+        }
+      },
+      onError: () => {
+        setIsSubmit(false);
+        message.destroy("user_not_found");
+        message.error({ content: "user not found" , key: "user_not_found"});
+      }
     }
-  }
-
-  const handleResp = (resp: any): any => {
-    if (resp.data.debug_msg && resp.data.debug_msg !== "") {
-      throw new Error(resp.data.debug_msg);
-    }
-
-    return resp.data;
-  };
+  );
 
   async function fetchUserList(username: string): Promise<UserValue[]> {
-    return searchUsers(username).then((resp) => {
+    return unsplashRequest.searchUsers.post(
+      {keyword: username}
+    ).then((resp) => {
       let users = resp.users;
       
       return users?.map((user: User) => ({
@@ -83,6 +95,10 @@ const SearchBar = (props: SearchBarProps): JSX.Element => {
     return lodash.debounce(loadOptions, debounceTimeout);
   }, [fetchUserList, debounceTimeout]);
 
+  const submitHandler = () => {
+    setIsSubmit(true)
+  }
+
     return (
       <AutoComplete
         filterOption={false}
@@ -91,7 +107,7 @@ const SearchBar = (props: SearchBarProps): JSX.Element => {
         {...props}
         options={options}
         size="large"
-        onChange={(e)=> setValue(e)}
+        onChange={(e) => setValue(e)}
         className={s.autocomplete}
         onDropdownVisibleChange={(e) => setDropdownVisible(e)}
       >
@@ -102,12 +118,21 @@ const SearchBar = (props: SearchBarProps): JSX.Element => {
             value={value}
             onKeyDown={(e) => {
               if (!dropdownVisible && e.key === "Enter") {
-                console.log("search")
+                submitHandler();
               }
             }}
           />
-          <div className={s.searchBarIcon} onClick={(e) => {e.stopPropagation()}}>
-            <BsSearch className={s.searchIcon}/>
+          <div
+            className={`${s.searchBarIcon} ${props.className}`}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            {isGetUserLoading ? (
+              <Spin size="small" />
+            ) : (
+              <BsSearch className={s.searchIcon} onClick={submitHandler} />
+            )}
           </div>
         </div>
       </AutoComplete>

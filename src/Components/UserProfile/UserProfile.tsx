@@ -19,7 +19,7 @@ const UserProfile = (): JSX.Element => {
     const { user: loggedInUser } = useUser()
     const navigate = useNavigate();
 
-    const { data: user, isLoading: isGetUserLoading } = useGetUserQuery(userID, {
+    const { data: user, isLoading: isGetUserLoading } = useGetUserQuery(userID, undefined, {
       refetchOnWindowFocus: true,
       refetchInterval: false,
       retry: 0,
@@ -85,7 +85,7 @@ const UserProfile = (): JSX.Element => {
               </div>
 
               <div className={s.userInfo}>
-                <h1>{`${user?.last_name} ${user?.first_name}`}</h1>
+                <h1>{`${user?.last_name || ""} ${user?.first_name || ""}`}</h1>
                 <p>
                   {`Download free, beautiful high-quality photos curated by ${user?.last_name}.`}
                 </p>

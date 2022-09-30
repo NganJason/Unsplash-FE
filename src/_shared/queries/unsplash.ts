@@ -35,13 +35,15 @@ export const useVerifyUserQuery = (
 }
 
 export const useGetUserQuery = (
-  userID: number,
+  userID?: number,
+  username?: string,
   options?: UseQueryOptions<User | null>
 ) => {
   const getUserFetch = async (): Promise<User | null> => {
     const response: GetUserResponse = await unsplashRequest.getUser.post(
       {
-        user_id: userID
+        user_id: userID,
+        username: username
       }
     );
 

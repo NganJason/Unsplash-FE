@@ -5,7 +5,9 @@ import {
 import axios from "axios";
 
 import { unsplashRequest } from "../api";
-import { AddDeltaImageResponse, Image, UploadImageResponse } from "../api/client";
+import { AddDeltaImageResponse, Image, SearchUsersResponse, UploadImageResponse, User } from "../api/client";
+import { getJWTHeader } from "../utils/util";
+import { getStoredUser } from "../utils/user_storage";
 
 const formKeyUploadImg = "img"
 const formKeyUploadProfileImg = "profile_img";
@@ -26,7 +28,11 @@ export const useLikeImageMutation = (
             delta_image: {
                 likes: 1
             }
-        })
+        },
+        {
+          headers: getJWTHeader(getStoredUser())
+        }
+        )
 
         return response.image ?? {}
     }
@@ -60,11 +66,12 @@ export const useUploadImage = (
     let formData = new FormData();
     formData.append(formKeyUploadImg, file);
 
+    let headers = getJWTHeader(getStoredUser())
+    headers["Content-Type"] = "multipart/form-data"
+
     try {
       let resp: UploadImageResponse = await axios.post(url, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: headers,
         withCredentials: true,
       });
 
@@ -89,11 +96,12 @@ export const useUploadProfileImg = (
     let formData = new FormData();
     formData.append(formKeyUploadProfileImg, file);
 
+    let headers = getJWTHeader(getStoredUser());
+    headers["Content-Type"] = "multipart/form-data";
+
     try {
       let resp: UploadImageResponse = await axios.post(url, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: headers,
         withCredentials: true,
       });
 
