@@ -31,15 +31,6 @@ const profileMenu = (menuOnClickHandler: MenuProps["onClick"], isLoggedIn: boole
         </div>
       ),
     },
-    {
-      key: "logout",
-      label: (
-        <div className={`${s.dropdownItem} ${s.dropdownItemLast}`}>
-          <RiLogoutBoxRLine />
-          <p>Logout</p>
-        </div>
-      ),
-    },
   ];
 
   if (isLoggedIn) {
@@ -49,6 +40,16 @@ const profileMenu = (menuOnClickHandler: MenuProps["onClick"], isLoggedIn: boole
         <div className={s.dropdownItem}>
           <CgProfile />
           <p>Profile</p>
+        </div>
+      ),
+    });
+
+    items.push({
+      key: "logout",
+      label: (
+        <div className={`${s.dropdownItem} ${s.dropdownItemLast}`}>
+          <RiLogoutBoxRLine />
+          <p>Logout</p>
         </div>
       ),
     });
@@ -79,9 +80,10 @@ const Nav = (): JSX.Element => {
   const { user } = useUser()
   const { logout } = useAuth();
 
-  const menuOnClickHandler: MenuProps["onClick"] = (e) => {
+  const menuOnClickHandler: MenuProps["onClick"] = async (e) => {
     if (e.key === "logout") {
-      logout();
+      await logout();
+      navigate("/")
       window.location.reload();
     }
 
@@ -116,10 +118,11 @@ const Nav = (): JSX.Element => {
 
     return (
       <div className={s.nav}>
-        <div className={s.navBrand}>
-          <Link to="/">
-            <img src={unsplashIcon} />
-          </Link>
+        <div className={s.navBrand} onClick={() => {
+          navigate("/")
+          window.location.reload()
+        }}>
+            <img src={unsplashIcon}/>
         </div>
 
         <div className={s.navMiddle}>

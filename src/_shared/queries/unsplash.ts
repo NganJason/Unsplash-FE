@@ -1,6 +1,8 @@
 import { useInfiniteQuery, useQuery, UseQueryOptions } from "react-query";
 import { unsplashRequest } from "../api";
-import { GetImagesResponse, VerifyUserRequest, VerifyUserResponse, User, GetUserResponse, GetUserLikesResponse, Image } from "../api/client"
+import { GetImagesResponse, VerifyUserRequest, VerifyUserResponse, User, GetUserResponse, GetUserLikesResponse } from "../api/client"
+import { getStoredUser } from "../utils/user_storage"
+import { getJWTHeader } from "../utils/util";
 
 export enum QueryKeys {
   VERIFY_USER = "VERIFY_USER",
@@ -13,13 +15,17 @@ export const useVerifyUserQuery = (
     params: VerifyUserRequest,
     options?: UseQueryOptions<User | null>
 ) => {
-    const verifyUserFetch = async (): Promise<User | null> => {
-        const response: VerifyUserResponse = await unsplashRequest.verifyUser.post(
-            params as VerifyUserRequest
-        );
+    const verifyUserFetch = async (
+    ): Promise<User | null> => {
+      const response: VerifyUserResponse =
+        await unsplashRequest.verifyUser.post(
+        {},
+        {
+          headers: getJWTHeader(getStoredUser()),
+        });
 
-        return response.user
-    }
+      return response.user;
+    };
 
     return useQuery<User | null>(
       [QueryKeys.VERIFY_USER],
@@ -29,13 +35,15 @@ export const useVerifyUserQuery = (
 }
 
 export const useGetUserQuery = (
-  userID: number,
+  userID?: number,
+  username?: string,
   options?: UseQueryOptions<User | null>
 ) => {
   const getUserFetch = async (): Promise<User | null> => {
     const response: GetUserResponse = await unsplashRequest.getUser.post(
       {
-        user_id: userID
+        user_id: userID,
+        username: username
       }
     );
 

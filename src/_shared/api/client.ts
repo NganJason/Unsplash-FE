@@ -55,6 +55,7 @@ export interface User {
   first_name?: string;
   last_name?: string;
   profile_url?: string;
+  token?: string;
 };
 
 export interface CreateUserRequest {
@@ -72,6 +73,7 @@ export interface CreateUserResponse {
 
 export interface GetUserRequest {
   user_id?: number;
+  username?: string;
 }
 
 export interface GetUserResponse {
@@ -134,6 +136,14 @@ export interface UploadImageRequest {
 export interface UploadImageResponse {
   debug_msg?: string;
   image?: Image;
+}
+
+export interface SearchUsersRequest {
+  keyword?: string;
+}
+
+export interface SearchUsersResponse {
+  users: User[];
 }
 
 export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
@@ -304,6 +314,20 @@ export function getApis(baseUrl = DEFAULT_BASE_URL, opts?: Options) {
         const path = "/api/image/upload";
 
         return request<UploadImageRequest, UploadImageResponse>(
+          baseUrl + path,
+          "post",
+          data,
+          BODY_TYPE.json,
+          requestInit
+        );
+      },
+    },
+    searchUsers: {
+      path: "/api/user/search",
+      post: (data: SearchUsersRequest, requestInit?: RequestInit) => {
+        const path = "/api/user/search";
+
+        return request<SearchUsersRequest, SearchUsersResponse>(
           baseUrl + path,
           "post",
           data,

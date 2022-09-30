@@ -35,7 +35,9 @@ const Signup = (): JSX.Element => {
     return (
       <div className={s.signupContainer}>
         <div className={s.heroImg}>
-          <img src="https://images.unsplash.com/photo-1661937303423-f251f4b80c8f?ixlib=rb-1.2.1&w=1080&fit=max&q=80&fm=jpg&crop=entropy&cs=tinysrgb"></img>
+          <img 
+            src="https://images.unsplash.com/photo-1661937303423-f251f4b80c8f?ixlib=rb-1.2.1&w=1080&fit=max&q=80&fm=jpg&crop=entropy&cs=tinysrgb"
+          />
 
           <div className={s.heroHeader}>
             <Link to="/">

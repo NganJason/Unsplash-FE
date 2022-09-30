@@ -19,7 +19,7 @@ const UserProfile = (): JSX.Element => {
     const { user: loggedInUser } = useUser()
     const navigate = useNavigate();
 
-    const { data: user, isLoading: isGetUserLoading } = useGetUserQuery(userID, {
+    const { data: user, isLoading: isGetUserLoading } = useGetUserQuery(userID, undefined, {
       refetchOnWindowFocus: true,
       refetchInterval: false,
       retry: 0,
@@ -85,7 +85,7 @@ const UserProfile = (): JSX.Element => {
               </div>
 
               <div className={s.userInfo}>
-                <h1>{`${user?.last_name} ${user?.first_name}`}</h1>
+                <h1>{`${user?.last_name || ""} ${user?.first_name || ""}`}</h1>
                 <p>
                   {`Download free, beautiful high-quality photos curated by ${user?.last_name}.`}
                 </p>
@@ -96,31 +96,32 @@ const UserProfile = (): JSX.Element => {
               <Tabs className={s.tabs} tabBarGutter={50}>
                 <TabPane
                   tab={
-                    <span className={s.tabTitle}>
-                      <AiTwotoneLike className={s.tabIcon} />
-                      Likes
-                    </span>
-                  }
-                  key="1"
-                >
-                  <div className={s.userImages}>
-                    <ImgGrid data={data} fetchNextPage={fetchNextPage} />
-                  </div>
-                </TabPane>
-                <TabPane
-                  tab={
                     <span className={`${s.tabTitle} ${s.firstTab}`}>
                       <HiPhotograph className={s.tabIcon} />
                       Photos
                     </span>
                   }
-                  key="2"
+                  key="1"
                 >
                   <div className={s.userImages}>
                     <ImgGrid
                       data={imgPostedByUser}
                       fetchNextPage={fetchNextImgPostedByUser}
                     />
+                  </div>
+                </TabPane>
+
+                <TabPane
+                  tab={
+                    <span className={s.tabTitle}>
+                      <AiTwotoneLike className={s.tabIcon} />
+                      Likes
+                    </span>
+                  }
+                  key="2"
+                >
+                  <div className={s.userImages}>
+                    <ImgGrid data={data} fetchNextPage={fetchNextPage} />
                   </div>
                 </TabPane>
               </Tabs>

@@ -4,11 +4,11 @@ import s from "./s.module.scss";
 import { Button, Image, message } from "antd";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
 import { AiFillLike } from "react-icons/ai";
-import { GoPlus } from "react-icons/go";
 import { FaShare } from "react-icons/fa"
 import { Image as ImageType } from "../../../../_shared/api/client";
 import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
 import { toImgDownloadLink } from "../../../../_shared/utils/util";
+import { useNavigate } from "react-router-dom";
 
 type ImgModalProps = {
   img: ImageType;
@@ -16,12 +16,18 @@ type ImgModalProps = {
 
 const ImgModal = (props: ImgModalProps): JSX.Element => {
   const { img } = props
+  const navigate = useNavigate();
 
   const { mutate: likeImage, isLoading: isLikeImageLoading } =
     useLikeImageMutation({
       onError: (err): void => {
         if (err instanceof Error) {
-          message.error(err.message);
+          if (err.message.includes("401")) {
+            navigate("/?login=true");
+            window.location.reload();
+          } else {
+            message.error(err.message);
+          }
         }
       },
       onSuccess: () => {
@@ -76,7 +82,12 @@ const ImgModal = (props: ImgModalProps): JSX.Element => {
             <h2>{img.downloads}</h2>
           </div>
         </div>
-        <Button>
+        <Button
+          onClick={() => {
+            navigator.clipboard.writeText(img.url || "");
+            message.success("Copied to clipboard!");
+          }}
+        >
           <FaShare className={s.icon} />
           Share
         </Button>

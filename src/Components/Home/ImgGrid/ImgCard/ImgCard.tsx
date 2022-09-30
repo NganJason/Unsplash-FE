@@ -3,10 +3,12 @@ import s from "./s.module.scss";
 
 import { Button, message } from "antd";
 import { AiFillLike, AiOutlineArrowDown } from "react-icons/ai";
+import { FaShare } from "react-icons/fa";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
 import { Image } from "../../../../_shared/api/client";
 import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
 import { toImgDownloadLink } from "../../../../_shared/utils/util";
+import { useNavigate } from "react-router-dom";
 
 
 type ImgCardProps = {
@@ -17,13 +19,19 @@ type ImgCardProps = {
 
 const ImgCard = (props: ImgCardProps) => {
     const { img, imgUrl, onClick } = props
+    const navigate = useNavigate();
 
     const { mutate: likeImage, isLoading: isLikeImageLoading } =
       useLikeImageMutation({
         onError: (err): void => {
-          // if (err instanceof Error) {
-          //   message.error(err.message);
-          // }
+          if (err instanceof Error) {
+            if (err.message.includes("401")) {
+              navigate("/?login=true");
+              window.location.reload()
+            } else {
+              message.error(err.message);
+            }
+          }
         },
         onSuccess: () => {
           message.success("Added to liked library!");
@@ -54,6 +62,18 @@ const ImgCard = (props: ImgCardProps) => {
               onClick={(e) => {
                 e.stopPropagation();
                 likeImage(img.id || 0);
+              }}
+            />
+
+            <Button
+              className={s.infoBtn}
+              type="primary"
+              icon={<FaShare />}
+              size="large"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigator.clipboard.writeText(img.url || "");
+                message.success("Copied to clipboard!");
               }}
             />
           </div>
