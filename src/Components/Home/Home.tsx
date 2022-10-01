@@ -7,7 +7,7 @@ import s from "./s.module.scss";
 const heroImg = "https://images.unsplash.com/photo-1660506826403-eb494645a7e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1vZi10aGUtZGF5fHx8fGVufDB8fHx8&dpr=1&auto=format%2Ccompress&fit=crop&w=1799&h=594"
 
 const Home = (): JSX.Element => {
-    const { data, fetchNextPage, isLoading } = useGetImagesQuery(true)
+    const { data, fetchNextPage, isLoading, isFetching } = useGetImagesQuery(true)
 
     return (
       <div className={s.home}>
@@ -32,7 +32,7 @@ const Home = (): JSX.Element => {
           <ImgGrid
             data={data}
             fetchNextPage={fetchNextPage}
-            isLoading={isLoading}
+            isLoading={isLoading || isFetching}
           />
         </div>
       </div>

@@ -11,14 +11,16 @@ import { Button, Dropdown, Menu } from "antd";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineLogin, AiOutlineCloudUpload } from "react-icons/ai";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { IoLogoGithub } from "react-icons/io";
 import type { MenuProps } from "antd";
 import SearchBar from "./Searchbar/Searchbar";
 
 import { toCapitalise } from "../../utils/util";
 import { unknownImgUrl } from "../../constants/constant";
+import { BsGithub } from "react-icons/bs";
 
 const unsplashIcon =
-  "https://w7.pngwing.com/pngs/981/688/png-transparent-unsplash-font-awesome-brands-vol-icon-thumbnail.png";
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_lVj4bb8PX53WbABn6ptqcrK_C6IR7R6QP_tX0WF3Qqpnmno5HpobV3PvVufiyoxu9IY&usqp=CAU";
 
 const profileMenu = (menuOnClickHandler: MenuProps["onClick"], isLoggedIn: boolean): JSX.Element => {
   let items = [
@@ -28,6 +30,15 @@ const profileMenu = (menuOnClickHandler: MenuProps["onClick"], isLoggedIn: boole
         <div className={s.dropdownItem}>
           <AiOutlineCloudUpload />
           <p>Upload Photo</p>
+        </div>
+      ),
+    },
+    {
+      key: "github",
+      label: (
+        <div className={s.dropdownItem}>
+          <BsGithub />
+          <p>Github</p>
         </div>
       ),
     },
@@ -106,6 +117,10 @@ const Nav = (): JSX.Element => {
 
       window.location.reload();
     }
+
+    if (e.key === "github") {
+      window.open("https://github.com/NganJason/Unsplash-FE");
+    }
   };
 
     const onUploadPhoto = () => {
@@ -118,14 +133,14 @@ const Nav = (): JSX.Element => {
 
     return (
       <div className={s.nav}>
-        <div className={s.navBrand} onClick={() => {
-          navigate("/")
-          window.location.reload()
-        }}>
-            <img 
-              src={unsplashIcon}
-              alt="nav icon"
-            />
+        <div
+          className={s.navBrand}
+          onClick={() => {
+            navigate("/");
+            window.location.reload();
+          }}
+        >
+          <img src={unsplashIcon} alt="nav icon" />
         </div>
 
         <div className={s.navMiddle}>
@@ -134,6 +149,13 @@ const Nav = (): JSX.Element => {
 
         <div className={s.navRight}>
           <div className={s.navSetting}>
+              <IoLogoGithub 
+                className={s.gitlab} 
+                onClick={() => {
+                  window.open("https://github.com/NganJason/Unsplash-FE");
+                }}
+              />
+
             <Button onClick={onUploadPhoto}>Upload photo</Button>
             {user ? (
               <Dropdown

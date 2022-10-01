@@ -35,9 +35,7 @@ const Signup = (): JSX.Element => {
     return (
       <div className={s.signupContainer}>
         <div className={s.heroImg}>
-          <img 
-            src="https://images.unsplash.com/photo-1661937303423-f251f4b80c8f?ixlib=rb-1.2.1&w=1080&fit=max&q=80&fm=jpg&crop=entropy&cs=tinysrgb"
-          />
+          <img src="https://images.unsplash.com/photo-1661937303423-f251f4b80c8f?ixlib=rb-1.2.1&w=1080&fit=max&q=80&fm=jpg&crop=entropy&cs=tinysrgb" />
 
           <div className={s.heroHeader}>
             <Link to="/">
@@ -65,20 +63,26 @@ const Signup = (): JSX.Element => {
             </p>
 
             <Form layout="vertical" className={s.inlineForm} form={form}>
-              <Form.Item label="First name" name={FIRST_NAME}>
+              <Form.Item
+                label="First name"
+                name={FIRST_NAME}
+                rules={[{ required: true, message: "First name cannot be empty" }]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Last name" name={LAST_NAME}>
+              <Form.Item
+                label="Last name"
+                name={LAST_NAME}
+                rules={[
+                  { required: true, message: "Last name cannot be empty" },
+                ]}
+              >
                 <Input />
               </Form.Item>
             </Form>
 
-            <Form
-              layout="vertical"
-              className={s.verticalForm}
-              form={form}
-            >
+            <Form layout="vertical" className={s.verticalForm} form={form}>
               <Form.Item
                 label="Email"
                 name={EMAIL}

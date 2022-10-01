@@ -1,6 +1,10 @@
 import { User } from "../api/client";
 
 export function toCapitalise(word: string): string {
+    if (word.length === 0) {
+        return word
+    }
+    
     return word[0].toUpperCase() + word.substring(1);
 }
 

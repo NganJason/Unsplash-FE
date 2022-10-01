@@ -119,6 +119,18 @@
     }
 }
 
+.gitlab {
+    margin-right: 0.9rem;
+
+    font-size: 23px;
+    color: black;
+    cursor: pointer;
+}
+
+.gitlab:hover {
+    transform: scale(1.06);
+}
+
 .dropdownItemLast {
     border-top: 1px solid #CFD2CF;
 }
