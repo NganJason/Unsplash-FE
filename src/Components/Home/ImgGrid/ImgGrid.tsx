@@ -95,12 +95,12 @@ const ImgGrid = (props: ImgGridProps): JSX.Element => {
               </div>
             );
           })}
-          {isLoading && (
-            <div className={s.loadingSpin}>
-              <Spin size="large"/>
-            </div>
-          )}
         </div>
+        {isLoading && (
+          <div className={s.loadingSpin}>
+            <Spin size="large" />
+          </div>
+        )}
         <Modal
           title=""
           maskClosable={true}
