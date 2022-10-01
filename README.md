@@ -1,7 +1,7 @@
 # Unsplash FE #
 
 Full stack Unsplash clone built using React, Typescript, SCSS and Golang.
-<a href="doc:introduction" target="_blank">Unsplash BE Repo</a>
+[Unsplash BE Repo](https://github.com/NganJason/ChatGroup-BE)
 
 #### Background
 * The Pomodoro technique breaks down your work into intervals, usually 45 minutes and separated by short breaks.
