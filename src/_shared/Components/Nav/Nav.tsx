@@ -18,7 +18,7 @@ import { toCapitalise } from "../../utils/util";
 import { unknownImgUrl } from "../../constants/constant";
 
 const unsplashIcon =
-  "https://cdn4.iconfinder.com/data/icons/logos-brands-5/24/unsplash-512.png";
+  "https://w7.pngwing.com/pngs/981/688/png-transparent-unsplash-font-awesome-brands-vol-icon-thumbnail.png";
 
 const profileMenu = (menuOnClickHandler: MenuProps["onClick"], isLoggedIn: boolean): JSX.Element => {
   let items = [
@@ -122,7 +122,10 @@ const Nav = (): JSX.Element => {
           navigate("/")
           window.location.reload()
         }}>
-            <img src={unsplashIcon}/>
+            <img 
+              src={unsplashIcon}
+              alt="nav icon"
+            />
         </div>
 
         <div className={s.navMiddle}>
