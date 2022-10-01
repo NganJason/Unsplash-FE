@@ -1,8 +1,12 @@
 # Unsplash FE #
 
+![Screenshot 2022-10-01 at 4 00 19 PM](https://user-images.githubusercontent.com/57489399/193399907-81e7ef0b-baf5-4de0-8d5f-94b77c9e00dc.png)
+
 Full stack Unsplash clone built using React, Typescript, SCSS and Golang.
 
-[Unsplash BE Repo](https://github.com/NganJason/ChatGroup-BE)
+#### Features
+* [Unsplash BE Repo](https://github.com/NganJason/ChatGroup-BE)
+* [Website](https://keen-elf-3ab3ce.netlify.app/)
 
 #### Features
 * Support user signup and login flow via JWT and SHA256 hashing algorithm
