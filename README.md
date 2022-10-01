@@ -24,5 +24,5 @@ Full stack Unsplash Clone built using React, Typescript, SCSS and Golang.
 
 ## Demo Videos ##
 * [User flow demo](https://www.canva.com/design/DAFNyMFttyo/oIH2SiTuLi4pXwUdImICTg/watch?utm_content=DAFNyMFttyo&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
-<img src="https://user-images.githubusercontent.com/57489399/193401323-a7ab1655-692a-45ea-b2a7-c451d479ac3f.gif" name="Web Socket & User Notifications">
+<img src="https://www.canva.com/design/DAFNyMFttyo/oIH2SiTuLi4pXwUdImICTg/watch?utm_content=DAFNyMFttyo&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" name="Web Socket & User Notifications">
 
