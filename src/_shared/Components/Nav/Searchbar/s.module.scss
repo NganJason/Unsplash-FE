@@ -44,3 +44,14 @@ input::placeholder {
     color: #413F42;
     transform: scale(1.01);
 }
+
+@media only screen and (max-width: 800px) {
+    .searchBarIcon {
+        top: 14%;
+        right: 4.5%;
+    }
+
+    .searchIcon {
+        height: 13px;
+    }
+}
