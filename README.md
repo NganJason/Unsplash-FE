@@ -5,7 +5,7 @@
 Full stack Unsplash Clone built using React, Typescript, SCSS and Golang.
 
 #### Links
-* [Unsplash BE Repo](https://github.com/NganJason/ChatGroup-BE)
+* [Unsplash BE Repo](https://github.com/NganJason/Unsplash-BE)
 * [Website](https://keen-elf-3ab3ce.netlify.app/)
 
 #### Features
