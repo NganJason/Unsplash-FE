@@ -1,2 +1,1 @@
-/* /index.html 200
-/api/*  https://radiant-woodland-06473.herokuapp.com/api/:splat  200
+/api/*  https://radiant-woodland-06473.herokuapp.com/:splat  200
