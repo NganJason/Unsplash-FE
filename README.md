@@ -23,7 +23,7 @@ Full stack Unsplash Clone built using React, Typescript, SCSS and Golang.
 
 
 ## Demo Videos ##
-<video src="https://www.canva.com/design/DAFNyMFttyo/oIH2SiTuLi4pXwUdImICTg/watch?utm_content=DAFNyMFttyo&utm_campaign=celebratory_first_publish&utm_medium=link&utm_source=celebratory_first_publish" name="Demo video">
+[<video src="https://www.canva.com/design/DAFNyMFttyo/oIH2SiTuLi4pXwUdImICTg/watch?utm_content=DAFNyMFttyo&utm_campaign=celebratory_first_publish&utm_medium=link&utm_source=celebratory_first_publish" name="Demo video">](https://www.youtube.com/watch?v=ou_tRM_boOM)
 
 
 
