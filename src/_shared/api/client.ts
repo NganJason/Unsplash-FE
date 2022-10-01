@@ -1,7 +1,7 @@
 import { createRequester, BODY_TYPE } from "./utils";
 import { clientInit } from "./responseHandler";
 
-export const DEFAULT_BASE_URL = "";
+export const DEFAULT_BASE_URL = "https://radiant-woodland-06473.herokuapp.com";
 
 type Options = {
   fetch?: (input: RequestInfo, init?: RequestInit) => Promise<any>;
