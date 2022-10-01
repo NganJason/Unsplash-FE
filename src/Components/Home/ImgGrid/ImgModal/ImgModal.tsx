@@ -3,12 +3,13 @@ import s from "./s.module.scss";
 
 import { Button, Image, message } from "antd";
 import UserTag from "../../../../_shared/Components/UserTag/UserTag";
-import { AiFillLike } from "react-icons/ai";
+import { AiFillLike, AiOutlineArrowDown } from "react-icons/ai";
 import { FaShare } from "react-icons/fa"
 import { Image as ImageType } from "../../../../_shared/api/client";
 import { useDownloadImageMutation, useLikeImageMutation } from "../../../../_shared/mutations/unsplash";
 import { toImgDownloadLink } from "../../../../_shared/utils/util";
 import { useNavigate } from "react-router-dom";
+import { useWindowDimensions } from "../../../../_shared/hooks/useWindowDimensions";
 
 type ImgModalProps = {
   img: ImageType;
@@ -17,6 +18,7 @@ type ImgModalProps = {
 const ImgModal = (props: ImgModalProps): JSX.Element => {
   const { img } = props
   const navigate = useNavigate();
+  const { width } = useWindowDimensions();
 
   const { mutate: likeImage, isLoading: isLikeImageLoading } =
     useLikeImageMutation({
@@ -48,6 +50,7 @@ const ImgModal = (props: ImgModalProps): JSX.Element => {
     <div className={s.imgModal}>
       <div className={s.modalHeader}>
         <UserTag user={img.user} />
+
         <div className={s.headerBtns}>
           <Button
             icon={<AiFillLike />}
@@ -56,18 +59,32 @@ const ImgModal = (props: ImgModalProps): JSX.Element => {
               likeImage(img.id || 0);
             }}
           />
+
           <a href={toImgDownloadLink(img.url || "")}>
-            <Button
-              className={s.downloadBtn}
-              onClick={() => {
-                downloadImage(img.id || 0);
-              }}
-            >
-              Download free
-            </Button>
+            {width < 800 ? (
+              <Button
+                className={s.downloadBtn}
+                onClick={() => {
+                  downloadImage(img.id || 0);
+                }}
+              >
+                <AiOutlineArrowDown/>
+                Download
+              </Button>
+            ) : (
+              <Button
+                className={s.downloadBtn}
+                onClick={() => {
+                  downloadImage(img.id || 0);
+                }}
+              >
+                Download Free
+              </Button>
+            )}
           </a>
         </div>
       </div>
+
       <div className={s.modalContent}>
         <Image src={img.url} />
       </div>

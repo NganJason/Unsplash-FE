@@ -9,7 +9,7 @@ export const useScroll = (callbackfn: ()=>void) => {
   const handleScroll = () => {
     if (
       window.innerHeight + document.documentElement.scrollTop >
-      Math.floor((document.documentElement.offsetHeight) / 1.5)
+      Math.floor((document.documentElement.offsetHeight) / 2)
     ) {
       callbackfn();
     }
